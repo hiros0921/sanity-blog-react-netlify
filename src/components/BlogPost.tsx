@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { PortableText } from '@portabletext/react'
 import { client, urlFor } from '../lib/sanity'
@@ -7,6 +7,12 @@ import EnhancedSEO from './EnhancedSEO'
 import OptimizedImage from './OptimizedImage'
 import CommentSection from './CommentSection'
 import BookmarkButton from './BookmarkButton'
+import RelatedPosts from './RelatedPosts'
+import ReadingProgress from './ReadingProgress'
+import TableOfContents from './TableOfContents'
+import { userBehaviorTracker } from '../lib/userBehavior'
+import { extractHeadingsFromPortableText, extractHeadingsFromDOM } from '../utils/extractHeadings'
+import type { Heading } from '../utils/extractHeadings'
 
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0] {
   _id,
@@ -29,16 +35,44 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0] {
   body
 }`
 
+// 全記事を取得するクエリ
+const ALL_POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc) {
+  _id,
+  _createdAt,
+  title,
+  slug,
+  author->{
+    _id,
+    name
+  },
+  mainImage,
+  categories[]->{
+    _id,
+    title
+  },
+  publishedAt,
+  excerpt
+}`
+
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>()
   const [post, setPost] = useState<BlogPostType | null>(null)
+  const [allPosts, setAllPosts] = useState<BlogPostType[]>([])
   const [loading, setLoading] = useState(true)
+  const [headings, setHeadings] = useState<Heading[]>([])
+  const readingStartTime = useRef<number>(0)
+  const scrollDepthRef = useRef<number>(0)
+  const articleRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const data = await client.fetch(POST_QUERY, { slug })
-        setPost(data)
+        const [postData, allPostsData] = await Promise.all([
+          client.fetch(POST_QUERY, { slug }),
+          client.fetch(ALL_POSTS_QUERY)
+        ])
+        setPost(postData)
+        setAllPosts(allPostsData)
       } catch (error) {
         console.error('Error fetching post:', error)
         // モックデータで記事詳細を表示
@@ -114,6 +148,66 @@ export default function BlogPost() {
     }
   }, [slug])
 
+  // ユーザー行動追跡
+  useEffect(() => {
+    if (!post) return
+
+    // 記事閲覧を記録
+    userBehaviorTracker.trackArticleView(
+      post._id,
+      post.categories?.[0]?.title || 'uncategorized',
+      post.categories?.map(cat => cat.title) || []
+    )
+    
+    // 読書開始時間を記録
+    readingStartTime.current = Date.now()
+
+    // スクロール深度の追跡
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+      const scrollPosition = window.scrollY
+      const scrollPercentage = (scrollPosition / scrollHeight) * 100
+      scrollDepthRef.current = Math.max(scrollDepthRef.current, scrollPercentage)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    // クリーンアップ時に読書時間を記録
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      
+      if (readingStartTime.current > 0) {
+        const readingDuration = Math.floor((Date.now() - readingStartTime.current) / 1000)
+        if (readingDuration > 5) { // 5秒以上読んでいた場合のみ記録
+          userBehaviorTracker.trackReadingProgress(
+            post._id,
+            readingDuration,
+            scrollDepthRef.current
+          )
+        }
+      }
+    }
+  }, [post])
+
+  // 見出しを抽出
+  useEffect(() => {
+    if (!post || !post.body) return;
+
+    // Portable Textから見出しを抽出
+    const portableTextHeadings = extractHeadingsFromPortableText(post.body);
+    setHeadings(portableTextHeadings);
+
+    // DOMが更新された後に見出し要素を取得してIDを設定
+    setTimeout(() => {
+      if (articleRef.current) {
+        const domHeadings = extractHeadingsFromDOM(articleRef.current);
+        if (domHeadings.length > 0) {
+          setHeadings(domHeadings);
+        }
+      }
+    }, 100);
+  }, [post])
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -137,6 +231,12 @@ export default function BlogPost() {
 
   return (
     <>
+      {/* 読書プログレスバー */}
+      <ReadingProgress />
+      
+      {/* フローティング目次 */}
+      <TableOfContents headings={headings} variant="floating" />
+      
       <EnhancedSEO 
         title={`${post.title} | HiroSuwa`}
         description={post.excerpt || `${post.title}についての詳細な解説記事です。プログラミングとWeb開発の最新情報をお届けします。`}
@@ -148,10 +248,15 @@ export default function BlogPost() {
         section="Technology"
         tags={post.categories?.map(cat => cat.title) || ['プログラミング', 'Web開発']}
       />
-      <article className="container mx-auto px-4 py-8 max-w-4xl">
+      <article ref={articleRef} className="container mx-auto px-4 py-8 max-w-4xl">
         <Link to="/" className="text-blue-600 hover:underline mb-4 inline-block">
         ← Back to posts
       </Link>
+      
+      {/* インライン目次（見出しが3つ以上ある場合のみ表示） */}
+      {headings.length >= 3 && (
+        <TableOfContents headings={headings} variant="inline" />
+      )}
       
       <header className="mb-8">
         <div className="flex items-start justify-between mb-4">
@@ -218,9 +323,21 @@ export default function BlogPost() {
           value={post.body}
           components={{
             block: {
-              h1: ({children}) => <h1 className="text-3xl font-bold my-4">{children}</h1>,
-              h2: ({children}) => <h2 className="text-2xl font-bold my-4">{children}</h2>,
-              h3: ({children}) => <h3 className="text-xl font-bold my-3">{children}</h3>,
+              h1: ({children, value}) => {
+                const text = value?.children?.[0]?.text || '';
+                const id = text.toLowerCase().trim().replace(/[^\w\s\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]/g, '').replace(/\s+/g, '-');
+                return <h1 id={id} className="text-3xl font-bold my-4">{children}</h1>
+              },
+              h2: ({children, value}) => {
+                const text = value?.children?.[0]?.text || '';
+                const id = text.toLowerCase().trim().replace(/[^\w\s\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]/g, '').replace(/\s+/g, '-');
+                return <h2 id={id} className="text-2xl font-bold my-4">{children}</h2>
+              },
+              h3: ({children, value}) => {
+                const text = value?.children?.[0]?.text || '';
+                const id = text.toLowerCase().trim().replace(/[^\w\s\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]/g, '').replace(/\s+/g, '-');
+                return <h3 id={id} className="text-xl font-bold my-3">{children}</h3>
+              },
               normal: ({children}) => <p className="my-4">{children}</p>,
             },
             marks: {
@@ -260,6 +377,17 @@ export default function BlogPost() {
       
       {/* コメントセクション */}
       <CommentSection postId={post._id} postTitle={post.title} />
+      
+      {/* 関連記事セクション */}
+      {allPosts.length > 0 && (
+        <div className="mt-16">
+          <RelatedPosts 
+            currentPost={post} 
+            allPosts={allPosts}
+            variant="bottom"
+          />
+        </div>
+      )}
     </article>
     </>
   )
