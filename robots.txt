@@ -1,0 +1,29 @@
+# robots.txt for https://bejewelled-sprinkles-b0d0d7.netlify.app
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /static/
+
+# Googlebot specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# AI/LLM Crawlers (LLMO optimization)
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+
+# Sitemap location
+Sitemap: https://bejewelled-sprinkles-b0d0d7.netlify.app/sitemap.xml
+
+# Cache control
+User-agent: *
+Crawl-delay: 1

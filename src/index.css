@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Playfair Display', Georgia, serif;
+  }
+
+  * {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply font-sans antialiased;
+  }
+
+  /* カスタムスクロールバー */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-b from-blue-500 to-purple-600 rounded-full;
+  }
+
+  /* テキスト選択時のスタイル */
+  ::selection {
+    @apply bg-blue-500 text-white;
+  }
+
+  /* カスタムカーソル */
+  .cursor-glow {
+    cursor: none;
+  }
+
+  /* ダークモードサポート */
+  html.dark {
+    color-scheme: dark;
+  }
+}
+
+@layer components {
+  /* ネオンテキストエフェクト */
+  .neon-text {
+    @apply relative;
+    text-shadow: 
+      0 0 10px #60a5fa,
+      0 0 20px #60a5fa,
+      0 0 30px #60a5fa,
+      0 0 40px #60a5fa;
+  }
+
+  /* グラデーションボーダー */
+  .gradient-border {
+    @apply relative;
+    background: linear-gradient(#fff, #fff) padding-box,
+                linear-gradient(135deg, #3b82f6, #9333ea) border-box;
+    border: 3px solid transparent;
+  }
+
+  /* グローエフェクト */
+  .glow {
+    @apply relative;
+    box-shadow: 
+      0 0 20px rgba(96, 165, 250, 0.3),
+      0 0 40px rgba(96, 165, 250, 0.2),
+      0 0 60px rgba(96, 165, 250, 0.1);
+  }
+
+  /* アニメーショングラデーション背景 */
+  .animated-gradient {
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    @apply bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* パーティクル背景 */
+  .particle-bg {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .particle-bg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: drift 20s linear infinite;
+  }
+
+  @keyframes drift {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ホバーリフトエフェクト */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-2;
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04),
+      0 30px 60px -15px rgba(59, 130, 246, 0.25);
+  }
+
+  /* プレミアムボタン */
+  .btn-premium {
+    @apply relative overflow-hidden;
+    @apply px-8 py-4 rounded-full font-semibold text-white;
+    @apply bg-gradient-to-r from-blue-600 to-purple-600;
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .btn-premium::before {
+    content: '';
+    @apply absolute inset-0;
+    @apply bg-gradient-to-r from-purple-600 to-pink-600;
+    @apply opacity-0 transition-opacity duration-300;
+  }
+
+  .btn-premium:hover::before {
+    @apply opacity-100;
+  }
+
+  .btn-premium span {
+    @apply relative z-10;
+  }
+
+  /* プレミアムカード */
+  .premium-card {
+    @apply relative overflow-hidden;
+    @apply bg-white dark:bg-gray-900;
+    @apply rounded-2xl;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.18);
+  }
+
+  /* フローティングアニメーション */
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  /* 回転アニメーション */
+  .rotate-animation {
+    animation: rotate 20s linear infinite;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* パルスアニメーション */
+  .pulse-animation {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: .5;
+    }
+  }
+}
+
+@layer utilities {
+  /* テキストグラデーション */
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent;
+  }
+
+  /* アニメーションテキストグラデーション */
+  .text-gradient-animation {
+    @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: textShine 3s linear infinite;
+  }
+
+  @keyframes textShine {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  /* ブラー背景 */
+  .blur-background {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* ディスプレイフォント */
+  .font-display {
+    font-family: var(--font-serif);
+  }
+}
