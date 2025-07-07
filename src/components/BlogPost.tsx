@@ -10,6 +10,8 @@ import BookmarkButton from './BookmarkButton'
 import RelatedPosts from './RelatedPosts'
 import ReadingProgress from './ReadingProgress'
 import TableOfContents from './TableOfContents'
+import ContentGate from './ContentGate'
+import PremiumBadge from './PremiumBadge'
 import { userBehaviorTracker } from '../lib/userBehavior'
 import { extractHeadingsFromPortableText, extractHeadingsFromDOM } from '../utils/extractHeadings'
 import type { Heading } from '../utils/extractHeadings'
@@ -260,7 +262,14 @@ export default function BlogPost() {
       
       <header className="mb-8">
         <div className="flex items-start justify-between mb-4">
-          <h1 className="text-4xl md:text-5xl font-bold">{post.title}</h1>
+          <div className="flex-1">
+            <h1 className="text-4xl md:text-5xl font-bold">{post.title}</h1>
+            {post.isPremium && post.requiredTier && (
+              <div className="mt-3">
+                <PremiumBadge requiredTier={post.requiredTier} size="large" />
+              </div>
+            )}
+          </div>
           <BookmarkButton 
             post={{
               id: post._id,
@@ -318,9 +327,66 @@ export default function BlogPost() {
         />
       )}
 
-      <div className="prose prose-lg max-w-none">
-        <PortableText 
-          value={post.body}
+      {/* プレミアムコンテンツのゲート制御 */}
+      {post.isPremium && post.requiredTier ? (
+        <ContentGate
+          requiredTier={post.requiredTier}
+          title="プレミアム限定記事"
+          description={`この記事は${post.requiredTier === 'basic' ? 'ベーシック' : post.requiredTier === 'premium' ? 'プレミアム' : 'エンタープライズ'}プラン以上のメンバー限定です。`}
+          preview={
+            post.previewContent ? (
+              <div className="prose prose-lg max-w-none">
+                <PortableText value={post.previewContent} />
+              </div>
+            ) : (
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-600">
+                  {post.excerpt || 'この記事の全文を読むには、プレミアムプランへのアップグレードが必要です。'}
+                </p>
+              </div>
+            )
+          }
+        >
+          <div className="prose prose-lg max-w-none">
+            <PortableText 
+              value={post.body}
+              components={{
+                block: {
+                  h1: ({children, value}) => {
+                    const text = value?.children?.[0]?.text || '';
+                    const id = text.toLowerCase().trim().replace(/[^\w\s\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]/g, '').replace(/\s+/g, '-');
+                    return <h1 id={id} className="text-3xl font-bold my-4">{children}</h1>
+                  },
+                  h2: ({children, value}) => {
+                    const text = value?.children?.[0]?.text || '';
+                    const id = text.toLowerCase().trim().replace(/[^\w\s\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]/g, '').replace(/\s+/g, '-');
+                    return <h2 id={id} className="text-2xl font-bold my-4">{children}</h2>
+                  },
+                  h3: ({children, value}) => {
+                    const text = value?.children?.[0]?.text || '';
+                    const id = text.toLowerCase().trim().replace(/[^\w\s\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]/g, '').replace(/\s+/g, '-');
+                    return <h3 id={id} className="text-xl font-bold my-3">{children}</h3>
+                  },
+                  normal: ({children}) => <p className="my-4">{children}</p>,
+                },
+                marks: {
+                  link: ({children, value}) => {
+                    const rel = !value.href.startsWith('/') ? 'noreferrer noopener' : undefined
+                    return (
+                      <a href={value.href} rel={rel} className="text-blue-600 hover:underline">
+                        {children}
+                      </a>
+                    )
+                  },
+                },
+              }}
+            />
+          </div>
+        </ContentGate>
+        ) : (
+          <div className="prose prose-lg max-w-none">
+            <PortableText 
+              value={post.body}
           components={{
             block: {
               h1: ({children, value}) => {
@@ -351,8 +417,9 @@ export default function BlogPost() {
               },
             },
           }}
-        />
-      </div>
+            />
+          </div>
+        )}
 
       {post.author?.bio && (
         <div className="mt-12 p-6 bg-gray-100 rounded-lg">

@@ -17,6 +17,8 @@ export interface Category {
   }
 }
 
+import type { MembershipTier } from './membership'
+
 export interface BlogPost {
   _id: string
   _createdAt: string
@@ -35,4 +37,8 @@ export interface BlogPost {
   publishedAt: string
   body: any[]
   excerpt?: string
+  // プレミアムコンテンツ関連
+  isPremium?: boolean
+  requiredTier?: MembershipTier
+  previewContent?: any[] // 無料ユーザー向けのプレビュー
 }

@@ -23,6 +23,8 @@ const UpdatedProfilePage = lazy(() => import('./components/UpdatedProfilePage'))
 const ContactPage = lazy(() => import('./components/ContactPage'))
 const CodeDemoPage = lazy(() => import('./components/CodeDemoPage'))
 const BookmarksDashboard = lazy(() => import('./components/BookmarksDashboard'))
+const PricingPage = lazy(() => import('./components/PricingPage'))
+const UserDashboard = lazy(() => import('./components/UserDashboard'))
 
 // ローディングコンポーネント
 function LoadingSpinner() {
@@ -65,6 +67,8 @@ function App() {
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/code-samples" element={<CodeDemoPage />} />
                 <Route path="/library" element={<BookmarksDashboard />} />
+                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/dashboard" element={<UserDashboard />} />
               </Routes>
             </Suspense>
           </main>

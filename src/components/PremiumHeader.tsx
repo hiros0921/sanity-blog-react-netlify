@@ -62,6 +62,8 @@ export default function PremiumHeader() {
               { name: 'Videos', path: '/videos' },
               { name: 'Code', path: '/code-samples' },
               { name: 'Library', path: '/library' },
+              { name: 'Pricing', path: '/pricing' },
+              { name: 'Dashboard', path: '/dashboard' },
               { name: 'Profile', path: '/profile' },
               { name: 'Contact', path: '/contact' }
             ].map((item) => (
@@ -151,6 +153,8 @@ export default function PremiumHeader() {
                   { name: 'Videos', path: '/videos' },
                   { name: 'Code', path: '/code-samples' },
                   { name: 'Library', path: '/library' },
+                  { name: 'Pricing', path: '/pricing' },
+                  { name: 'Dashboard', path: '/dashboard' },
                   { name: 'Profile', path: '/profile' },
                   { name: 'Contact', path: '/contact' }
                 ].map((item, index) => (
