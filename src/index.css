@@ -5,6 +5,9 @@
 /* テーマ関連のスタイル */
 @import './styles/theme.css';
 
+/* Twitter埋め込みスタイル */
+@import './styles/twitter-embed.css';
+
 @layer base {
   :root {
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;

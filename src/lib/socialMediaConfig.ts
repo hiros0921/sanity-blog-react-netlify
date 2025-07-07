@@ -11,9 +11,9 @@ export const socialMediaConfig = {
   
   // YouTube Data API v3
   youtube: {
-    channelId: 'YOUR_CHANNEL_ID', // チャンネルIDを取得する必要があります
+    channelId: import.meta.env.VITE_YOUTUBE_CHANNEL_ID || 'YOUR_CHANNEL_ID',
     apiKey: import.meta.env.VITE_YOUTUBE_API_KEY || '',
-    maxResults: 5,
+    maxResults: 10,
     // YouTube Data APIを使用するには、Google Cloud ConsoleでAPIキーを取得
   },
   
@@ -29,26 +29,55 @@ export const socialMediaConfig = {
 // RSS フィードを取得する関数
 export async function fetchNoteArticles() {
   try {
-    // CORSの問題を回避するため、サーバーサイドでの実装が推奨されます
-    // または、RSS-to-JSON APIサービスを使用
-    const response = await fetch(
-      `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(socialMediaConfig.note.rssFeedUrl)}`
-    )
+    console.log('Fetching note articles from:', socialMediaConfig.note.rssFeedUrl)
+    
+    // AllOriginsを使用してCORSを回避
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(socialMediaConfig.note.rssFeedUrl)}`
+    const response = await fetch(proxyUrl)
     const data = await response.json()
     
-    if (data.status === 'ok') {
-      return data.items.slice(0, 5).map((item: any) => ({
-        id: item.guid,
-        title: item.title,
-        url: item.link,
-        publishedAt: item.pubDate,
-        excerpt: item.description.substring(0, 100) + '...'
-      }))
+    if (data.contents) {
+      // XMLをパース
+      const parser = new DOMParser()
+      const xml = parser.parseFromString(data.contents, 'text/xml')
+      const items = xml.querySelectorAll('item')
+      
+      const articles = Array.from(items).slice(0, 10).map((item) => {
+        const title = item.querySelector('title')?.textContent || ''
+        const link = item.querySelector('link')?.textContent || ''
+        const pubDate = item.querySelector('pubDate')?.textContent || ''
+        const description = item.querySelector('description')?.textContent || ''
+        
+        return {
+          id: link,
+          title: title,
+          url: link,
+          publishedAt: pubDate,
+          excerpt: description
+            .replace(/<[^>]*>/g, '') // HTMLタグを除去
+            .replace(/&nbsp;/g, ' ') // &nbsp;をスペースに変換
+            .trim()
+            .substring(0, 150) + '...'
+        }
+      })
+      
+      // 日付で降順ソート（最新が最初）
+      articles.sort((a, b) => {
+        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      })
+      
+      console.log('Fetched articles:', articles.length, 'Latest:', articles[0]?.title)
+      
+      return articles
+    } else {
+      console.warn('No RSS content received')
+      return []
     }
   } catch (error) {
     console.error('Failed to fetch note articles:', error)
+    // エラーの場合も空配列を返す（モックデータは表示される）
+    return []
   }
-  return []
 }
 
 // YouTube動画を取得する関数
