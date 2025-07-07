@@ -12,7 +12,11 @@ import ReadingProgress from './ReadingProgress'
 import TableOfContents from './TableOfContents'
 import ContentGate from './ContentGate'
 import PremiumBadge from './PremiumBadge'
+import ReadingProgressIndicator from './ReadingProgressIndicator'
+import ReadingTimeDisplay from './ReadingTimeDisplay'
 import { userBehaviorTracker } from '../lib/userBehavior'
+import { readingTimeService } from '../lib/readingTime'
+import { useReadingProgress } from '../hooks/useReadingProgress'
 import { extractHeadingsFromPortableText, extractHeadingsFromDOM } from '../utils/extractHeadings'
 import type { Heading } from '../utils/extractHeadings'
 
@@ -62,9 +66,20 @@ export default function BlogPost() {
   const [allPosts, setAllPosts] = useState<BlogPostType[]>([])
   const [loading, setLoading] = useState(true)
   const [headings, setHeadings] = useState<Heading[]>([])
+  const [readingTime, setReadingTime] = useState<any>(null)
   const readingStartTime = useRef<number>(0)
   const scrollDepthRef = useRef<number>(0)
   const articleRef = useRef<HTMLElement>(null)
+  
+  // 読書進捗のフックを使用
+  const readingProgress = useReadingProgress({
+    onComplete: () => {
+      console.log('読書完了！')
+    },
+    onSectionChange: (section) => {
+      console.log('現在のセクション:', section)
+    }
+  })
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -208,6 +223,10 @@ export default function BlogPost() {
         }
       }
     }, 100);
+    
+    // 読書時間を計算
+    const calculatedReadingTime = readingTimeService.calculateFromPortableText(post.body);
+    setReadingTime(calculatedReadingTime);
   }, [post])
 
   if (loading) {
@@ -235,6 +254,14 @@ export default function BlogPost() {
     <>
       {/* 読書プログレスバー */}
       <ReadingProgress />
+      
+      {/* 新しいプログレスインジケーター */}
+      <ReadingProgressIndicator 
+        variant="circular"
+        readingTime={readingTime}
+        showTimeRemaining={true}
+        showBackToTop={true}
+      />
       
       {/* フローティング目次 */}
       <TableOfContents headings={headings} variant="floating" />
@@ -301,6 +328,16 @@ export default function BlogPost() {
           <time dateTime={post.publishedAt}>
             {new Date(post.publishedAt).toLocaleDateString()}
           </time>
+          {readingTime && (
+            <>
+              <span className="text-gray-400">•</span>
+              <ReadingTimeDisplay
+                readingTime={readingTime}
+                variant="simple"
+                showIcon={true}
+              />
+            </>
+          )}
         </div>
 
         {post.categories && post.categories.length > 0 && (

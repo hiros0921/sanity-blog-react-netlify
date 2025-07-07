@@ -2,17 +2,18 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Menu, X, Moon, Sun, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import AdvancedSearch from './AdvancedSearch'
 import CommentNotifications from './CommentNotifications'
+import LanguageSwitcher from './LanguageSwitcher'
+import ThemeToggle from './ThemeToggle'
 
 export default function PremiumHeader() {
+  const { t } = useTranslation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(true)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    document.documentElement.classList.add('dark')
-    
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
     }
@@ -20,11 +21,6 @@ export default function PremiumHeader() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode)
-    document.documentElement.classList.toggle('dark')
-  }
 
   return (
     <motion.header
@@ -57,15 +53,15 @@ export default function PremiumHeader() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {[
-              { name: 'Home', path: '/' },
-              { name: 'Blog', path: '/blog' },
-              { name: 'Videos', path: '/videos' },
-              { name: 'Code', path: '/code-samples' },
-              { name: 'Library', path: '/library' },
-              { name: 'Pricing', path: '/pricing' },
-              { name: 'Dashboard', path: '/dashboard' },
-              { name: 'Profile', path: '/profile' },
-              { name: 'Contact', path: '/contact' }
+              { name: t('common.home'), path: '/' },
+              { name: t('common.blog'), path: '/blog' },
+              { name: t('common.videos'), path: '/videos' },
+              { name: t('common.code'), path: '/code-samples' },
+              { name: t('common.library'), path: '/library' },
+              { name: t('common.pricing'), path: '/pricing' },
+              { name: t('common.dashboard'), path: '/dashboard' },
+              { name: t('common.profile'), path: '/profile' },
+              { name: t('common.contact'), path: '/contact' }
             ].map((item) => (
               <Link
                 key={item.name}
@@ -87,43 +83,19 @@ export default function PremiumHeader() {
             <div className="relative">
               <CommentNotifications />
             </div>
+            
+            {/* Language Switcher */}
+            <LanguageSwitcher variant="dropdown" showLabel={false} />
 
             {/* Dark mode toggle */}
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 text-gray-300 hover:text-white transition-colors duration-300"
-            >
-              <AnimatePresence mode="wait">
-                {isDarkMode ? (
-                  <motion.div
-                    key="sun"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Sun className="w-5 h-5" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="moon"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Moon className="w-5 h-5" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </button>
+            <ThemeToggle variant="icon" />
 
             {/* Premium CTA */}
             <Link
               to="/contact"
               className="hidden md:block px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/25 transform hover:-translate-y-0.5 transition-all duration-300"
             >
-              Get Started
+              {t('navigation.getStarted')}
             </Link>
 
             {/* Mobile menu button */}
@@ -148,15 +120,15 @@ export default function PremiumHeader() {
             >
               <div className="flex flex-col space-y-4 py-4">
                 {[
-                  { name: 'Home', path: '/' },
-                  { name: 'Blog', path: '/blog' },
-                  { name: 'Videos', path: '/videos' },
-                  { name: 'Code', path: '/code-samples' },
-                  { name: 'Library', path: '/library' },
-                  { name: 'Pricing', path: '/pricing' },
-                  { name: 'Dashboard', path: '/dashboard' },
-                  { name: 'Profile', path: '/profile' },
-                  { name: 'Contact', path: '/contact' }
+                  { name: t('common.home'), path: '/' },
+                  { name: t('common.blog'), path: '/blog' },
+                  { name: t('common.videos'), path: '/videos' },
+                  { name: t('common.code'), path: '/code-samples' },
+                  { name: t('common.library'), path: '/library' },
+                  { name: t('common.pricing'), path: '/pricing' },
+                  { name: t('common.dashboard'), path: '/dashboard' },
+                  { name: t('common.profile'), path: '/profile' },
+                  { name: t('common.contact'), path: '/contact' }
                 ].map((item, index) => (
                   <motion.div
                     key={item.name}

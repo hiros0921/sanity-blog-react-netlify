@@ -1,0 +1,190 @@
+{
+  "common": {
+    "home": "ホーム",
+    "blog": "ブログ",
+    "videos": "動画",
+    "code": "コード",
+    "library": "ライブラリ",
+    "pricing": "料金プラン",
+    "dashboard": "ダッシュボード",
+    "profile": "プロフィール",
+    "contact": "お問い合わせ",
+    "search": "検索",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "retry": "再試行",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "create": "作成",
+    "close": "閉じる",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ",
+    "submit": "送信",
+    "confirm": "確認",
+    "yes": "はい",
+    "no": "いいえ"
+  },
+  "navigation": {
+    "getStarted": "始める",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "signup": "新規登録",
+    "menu": "メニュー",
+    "settings": "設定"
+  },
+  "hero": {
+    "title": "最高のWeb体験を創造する",
+    "subtitle": "革新的なソリューションで次世代のデジタル体験を",
+    "description": "最新のテクノロジーとクリエイティブなアプローチで、あなたのビジネスを次のレベルへ導きます",
+    "cta": "今すぐ始める"
+  },
+  "blog": {
+    "readMore": "続きを読む",
+    "minRead": "分で読めます",
+    "publishedOn": "公開日",
+    "author": "著者",
+    "category": "カテゴリー",
+    "tags": "タグ",
+    "relatedPosts": "関連記事",
+    "noPostsFound": "記事が見つかりません",
+    "searchPosts": "記事を検索",
+    "allCategories": "すべてのカテゴリー",
+    "bookmark": "ブックマーク",
+    "share": "シェア",
+    "tableOfContents": "目次",
+    "backToTop": "トップへ戻る"
+  },
+  "pricing": {
+    "title": "シンプルで透明な料金プラン",
+    "subtitle": "あなたのニーズに合わせて最適なプランをお選びください",
+    "monthly": "月額",
+    "yearly": "年額",
+    "perMonth": "/月",
+    "perYear": "/年",
+    "currentPlan": "現在のプラン",
+    "upgrade": "アップグレード",
+    "downgrade": "ダウングレード",
+    "features": "機能",
+    "unlimited": "無制限",
+    "limited": "制限付き",
+    "getStarted": "始める",
+    "contactSales": "営業に問い合わせ",
+    "freeTrial": "無料トライアル",
+    "plans": {
+      "free": {
+        "name": "フリープラン",
+        "description": "個人利用や小規模プロジェクトに最適",
+        "features": [
+          "基本機能へのアクセス",
+          "月10記事まで閲覧可能",
+          "コミュニティサポート",
+          "基本的な分析機能"
+        ]
+      },
+      "basic": {
+        "name": "ベーシックプラン",
+        "description": "成長中のチームや個人事業主向け",
+        "features": [
+          "すべての基本機能",
+          "無制限の記事閲覧",
+          "優先サポート",
+          "詳細な分析機能",
+          "カスタムブランディング"
+        ]
+      },
+      "premium": {
+        "name": "プレミアムプラン",
+        "description": "本格的なビジネス利用に",
+        "features": [
+          "すべてのベーシック機能",
+          "APIアクセス",
+          "チーム管理機能",
+          "高度な分析とレポート",
+          "専用サポート",
+          "カスタム統合"
+        ]
+      },
+      "enterprise": {
+        "name": "エンタープライズ",
+        "description": "大規模組織向けのカスタムソリューション",
+        "features": [
+          "すべてのプレミアム機能",
+          "無制限のユーザー",
+          "SLA保証",
+          "専任アカウントマネージャー",
+          "オンプレミス対応",
+          "カスタム開発"
+        ]
+      }
+    }
+  },
+  "dashboard": {
+    "overview": "概要",
+    "billing": "支払い",
+    "coupons": "クーポン",
+    "affiliate": "アフィリエイト",
+    "notifications": "通知設定",
+    "accountSettings": "アカウント設定",
+    "subscription": "サブスクリプション",
+    "paymentHistory": "支払い履歴",
+    "invoices": "請求書",
+    "downloadCSV": "CSVダウンロード",
+    "totalRevenue": "総収益",
+    "pendingBalance": "未払い残高",
+    "accountStatus": "アカウント状態",
+    "memberSince": "登録日",
+    "nextBillingDate": "次回請求日",
+    "activitySummary": "アクティビティサマリー",
+    "articlesRead": "記事を読んだ数",
+    "consecutiveDays": "連続ログイン日数",
+    "unreadNotifications": "未読通知"
+  },
+  "advertising": {
+    "performance": "パフォーマンス",
+    "impressions": "表示回数",
+    "clicks": "クリック数",
+    "conversions": "コンバージョン",
+    "revenue": "収益",
+    "ctr": "クリック率",
+    "cvr": "コンバージョン率",
+    "ecpm": "eCPM",
+    "adBlockDetected": "広告ブロッカーが検出されました",
+    "adBlockMessage": "このサイトは広告収入で運営されています。広告ブロッカーを無効にしていただけると幸いです。",
+    "sponsoredContent": "スポンサード記事",
+    "affiliateProduct": "アフィリエイト商品",
+    "viewDetails": "詳細を見る",
+    "commission": "コミッション"
+  },
+  "emailNotifications": {
+    "settings": "メール通知設定",
+    "newContent": "新着コンテンツ",
+    "weeklyDigest": "週刊ダイジェスト",
+    "promotions": "プロモーション・特典",
+    "accountUpdates": "アカウント更新",
+    "commentReplies": "コメント返信",
+    "subscriptionReminders": "サブスクリプション通知",
+    "frequency": "通知頻度",
+    "unsubscribe": "配信停止"
+  },
+  "errors": {
+    "genericError": "エラーが発生しました",
+    "networkError": "ネットワークエラー",
+    "notFound": "ページが見つかりません",
+    "unauthorized": "認証が必要です",
+    "forbidden": "アクセス権限がありません",
+    "validationError": "入力内容にエラーがあります",
+    "serverError": "サーバーエラーが発生しました"
+  },
+  "success": {
+    "saved": "保存しました",
+    "updated": "更新しました",
+    "deleted": "削除しました",
+    "subscribed": "登録しました",
+    "unsubscribed": "登録を解除しました",
+    "paymentSuccessful": "支払いが完了しました",
+    "emailSent": "メールを送信しました"
+  }
+}

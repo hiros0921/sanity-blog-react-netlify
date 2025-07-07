@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Sparkles, Zap, Building2, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { stripeService, MEMBERSHIP_PLANS } from '../lib/stripe';
 import { authService } from '../lib/auth';
 import type { MembershipPlan } from '../types/membership';
 
 const PricingPage: React.FC = () => {
+  const { t } = useTranslation();
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('month');
   const [loading, setLoading] = useState<string | null>(null);
   const currentUser = authService.getCurrentUser();

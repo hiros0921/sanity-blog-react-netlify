@@ -1,0 +1,190 @@
+{
+  "common": {
+    "home": "Home",
+    "blog": "Blog",
+    "videos": "Videos",
+    "code": "Code",
+    "library": "Library",
+    "pricing": "Pricing",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "contact": "Contact",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "navigation": {
+    "getStarted": "Get Started",
+    "login": "Login",
+    "logout": "Logout",
+    "signup": "Sign Up",
+    "menu": "Menu",
+    "settings": "Settings"
+  },
+  "hero": {
+    "title": "Creating the Best Web Experience",
+    "subtitle": "Next-gen digital experiences with innovative solutions",
+    "description": "Take your business to the next level with cutting-edge technology and creative approaches",
+    "cta": "Get Started Now"
+  },
+  "blog": {
+    "readMore": "Read More",
+    "minRead": "min read",
+    "publishedOn": "Published on",
+    "author": "Author",
+    "category": "Category",
+    "tags": "Tags",
+    "relatedPosts": "Related Posts",
+    "noPostsFound": "No posts found",
+    "searchPosts": "Search posts",
+    "allCategories": "All Categories",
+    "bookmark": "Bookmark",
+    "share": "Share",
+    "tableOfContents": "Table of Contents",
+    "backToTop": "Back to Top"
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "Choose the perfect plan for your needs",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "perMonth": "/month",
+    "perYear": "/year",
+    "currentPlan": "Current Plan",
+    "upgrade": "Upgrade",
+    "downgrade": "Downgrade",
+    "features": "Features",
+    "unlimited": "Unlimited",
+    "limited": "Limited",
+    "getStarted": "Get Started",
+    "contactSales": "Contact Sales",
+    "freeTrial": "Free Trial",
+    "plans": {
+      "free": {
+        "name": "Free Plan",
+        "description": "Perfect for personal use and small projects",
+        "features": [
+          "Access to basic features",
+          "Up to 10 articles per month",
+          "Community support",
+          "Basic analytics"
+        ]
+      },
+      "basic": {
+        "name": "Basic Plan",
+        "description": "For growing teams and freelancers",
+        "features": [
+          "All basic features",
+          "Unlimited article access",
+          "Priority support",
+          "Advanced analytics",
+          "Custom branding"
+        ]
+      },
+      "premium": {
+        "name": "Premium Plan",
+        "description": "For serious business use",
+        "features": [
+          "All Basic features",
+          "API access",
+          "Team management",
+          "Advanced analytics & reports",
+          "Dedicated support",
+          "Custom integrations"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Custom solutions for large organizations",
+        "features": [
+          "All Premium features",
+          "Unlimited users",
+          "SLA guarantee",
+          "Dedicated account manager",
+          "On-premise deployment",
+          "Custom development"
+        ]
+      }
+    }
+  },
+  "dashboard": {
+    "overview": "Overview",
+    "billing": "Billing",
+    "coupons": "Coupons",
+    "affiliate": "Affiliate",
+    "notifications": "Notifications",
+    "accountSettings": "Account Settings",
+    "subscription": "Subscription",
+    "paymentHistory": "Payment History",
+    "invoices": "Invoices",
+    "downloadCSV": "Download CSV",
+    "totalRevenue": "Total Revenue",
+    "pendingBalance": "Pending Balance",
+    "accountStatus": "Account Status",
+    "memberSince": "Member Since",
+    "nextBillingDate": "Next Billing Date",
+    "activitySummary": "Activity Summary",
+    "articlesRead": "Articles Read",
+    "consecutiveDays": "Consecutive Days",
+    "unreadNotifications": "Unread Notifications"
+  },
+  "advertising": {
+    "performance": "Performance",
+    "impressions": "Impressions",
+    "clicks": "Clicks",
+    "conversions": "Conversions",
+    "revenue": "Revenue",
+    "ctr": "CTR",
+    "cvr": "CVR",
+    "ecpm": "eCPM",
+    "adBlockDetected": "Ad Blocker Detected",
+    "adBlockMessage": "This site is supported by advertising revenue. Please consider disabling your ad blocker.",
+    "sponsoredContent": "Sponsored Content",
+    "affiliateProduct": "Affiliate Product",
+    "viewDetails": "View Details",
+    "commission": "Commission"
+  },
+  "emailNotifications": {
+    "settings": "Email Notification Settings",
+    "newContent": "New Content",
+    "weeklyDigest": "Weekly Digest",
+    "promotions": "Promotions & Offers",
+    "accountUpdates": "Account Updates",
+    "commentReplies": "Comment Replies",
+    "subscriptionReminders": "Subscription Reminders",
+    "frequency": "Notification Frequency",
+    "unsubscribe": "Unsubscribe"
+  },
+  "errors": {
+    "genericError": "An error occurred",
+    "networkError": "Network error",
+    "notFound": "Page not found",
+    "unauthorized": "Authentication required",
+    "forbidden": "Access denied",
+    "validationError": "Validation error",
+    "serverError": "Server error occurred"
+  },
+  "success": {
+    "saved": "Saved successfully",
+    "updated": "Updated successfully",
+    "deleted": "Deleted successfully",
+    "subscribed": "Subscribed successfully",
+    "unsubscribed": "Unsubscribed successfully",
+    "paymentSuccessful": "Payment completed",
+    "emailSent": "Email sent successfully"
+  }
+}

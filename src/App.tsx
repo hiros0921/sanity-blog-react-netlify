@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import './lib/i18n' // i18n初期化
+import { ThemeProvider } from './contexts/ThemeContext'
 import PremiumHeader from './components/PremiumHeader'
 import Footer from './components/Footer'
 import CustomCursor from './components/CustomCursor'
@@ -44,7 +46,8 @@ function App() {
   
   return (
     <HelmetProvider>
-      <Router>
+      <ThemeProvider>
+        <Router>
         <CustomCursor />
         <OfflineIndicator />
         <ImagePerformanceMonitor />
@@ -74,7 +77,8 @@ function App() {
           </main>
           <Footer />
         </div>
-      </Router>
+        </Router>
+      </ThemeProvider>
     </HelmetProvider>
   )
 }
