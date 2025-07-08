@@ -112,13 +112,10 @@ export async function fetchYouTubeVideos() {
 // Twitter API v2でツイートを取得する関数
 export async function fetchTwitterTweets() {
   try {
-    // Netlify Functionsを使用するかどうかを判定
-    const isNetlify = window.location.hostname.includes('netlify');
-    const isProduction = window.location.hostname !== 'localhost';
+    // 常にNetlify Functionsを使用（ローカルでも動作）
+    console.log('Using Netlify Functions for Twitter API');
     
-    if (isNetlify || isProduction) {
-      // 本番環境: Netlify Functionsを使用
-      console.log('Using Netlify Functions for Twitter API');
+    try {
       
       // ユーザー情報を取得
       const userResponse = await fetch(
@@ -157,10 +154,9 @@ export async function fetchTwitterTweets() {
           url: `https://twitter.com/${socialMediaConfig.twitter.username}/status/${tweet.id}`
         }));
       }
-    } else {
-      // 開発環境: CORSの制限があるため、モックデータを使用
-      console.log('Development environment detected. Using mock data for Twitter.');
-      console.log('Deploy to Netlify to see real Twitter data.');
+    } catch (error) {
+      console.error('Failed to fetch from Netlify Functions:', error);
+      throw error;
     }
     
     return [];

@@ -1,3 +1,21 @@
 {
-	"siteId": "5953d805-bf77-4e77-9e78-e8d18d8bc3df"
+	"siteId": "5953d805-bf77-4e77-9e78-e8d18d8bc3df",
+	"geolocation": {
+		"data": {
+			"city": "Asaka",
+			"country": {
+				"code": "JP",
+				"name": "Japan"
+			},
+			"subdivision": {
+				"code": "11",
+				"name": "Saitama"
+			},
+			"timezone": "Asia/Tokyo",
+			"latitude": 35.8152,
+			"longitude": 139.5845,
+			"postalCode": "351-0021"
+		},
+		"timestamp": 1751975213131
+	}
 }

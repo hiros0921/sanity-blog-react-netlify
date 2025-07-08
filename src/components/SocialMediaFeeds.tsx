@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Youtube, Twitter, FileText, ExternalLink, RefreshCw, AlertCircle } from 'lucide-react'
 import OptimizedImage from './OptimizedImage'
+import TwitterEmbed from './TwitterEmbed'
 import { fetchNoteArticles, fetchYouTubeVideos, fetchTwitterTweets } from '../lib/socialMediaConfig'
 
 // モックデータ（実際のAPIが利用できない場合のデモ用）
@@ -103,8 +104,7 @@ export default function SocialMediaFeeds() {
   const loadAllData = async () => {
     await Promise.all([
       loadNoteArticles(),
-      loadYouTubeVideos(),
-      loadTwitterTweets()
+      loadYouTubeVideos()
     ])
   }
 
@@ -140,21 +140,7 @@ export default function SocialMediaFeeds() {
     }
   }
 
-  const loadTwitterTweets = async () => {
-    setLoadingStates(prev => ({ ...prev, twitter: true }))
-    setErrors(prev => ({ ...prev, twitter: null }))
-    try {
-      const tweets = await fetchTwitterTweets()
-      if (tweets.length > 0) {
-        setTweets(tweets)
-      }
-    } catch (error) {
-      console.error('Failed to load Twitter tweets:', error)
-      setErrors(prev => ({ ...prev, twitter: 'Twitterツイートの取得に失敗しました' }))
-    } finally {
-      setLoadingStates(prev => ({ ...prev, twitter: false }))
-    }
-  }
+  // Twitter埋め込みウィジェットを使用するため、API呼び出しは不要
 
   const handleRefresh = async () => {
     setRefreshing(true)
@@ -345,44 +331,8 @@ export default function SocialMediaFeeds() {
               <h3 className="text-2xl font-bold text-white">X (Twitter)</h3>
             </div>
             
-            {errors.twitter && (
-              <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-4">
-                <div className="flex items-center gap-2 text-red-400">
-                  <AlertCircle className="w-5 h-5" />
-                  <span className="text-sm">{errors.twitter}</span>
-                </div>
-              </div>
-            )}
-            
-            <div className="space-y-4">
-              {loadingStates.twitter && !tweets.length ? (
-                <div className="text-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
-                </div>
-              ) : (
-                tweets.map((tweet) => (
-                  <motion.div
-                    key={tweet.id}
-                    className="premium-card p-6 hover-lift"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <p className="text-white mb-3 text-sm leading-relaxed">
-                      {tweet.text}
-                    </p>
-                    <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span>{new Date(tweet.createdAt).toLocaleDateString('ja-JP')}</span>
-                      <div className="flex items-center gap-4">
-                        <span className="flex items-center gap-1">
-                          ❤️ {tweet.likes}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          🔁 {tweet.retweets}
-                        </span>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))
-              )}
+            <div className="premium-card overflow-hidden">
+              <TwitterEmbed username="hiros0921" theme="dark" height={500} />
             </div>
             
             <a
@@ -395,14 +345,6 @@ export default function SocialMediaFeeds() {
               <ExternalLink className="w-4 h-4" />
             </a>
             
-            {/* CORS制限の説明 */}
-            <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-              <p className="text-xs text-blue-400">
-                <span className="font-semibold">注：</span>セキュリティ上の制限により、ブラウザから直接Twitter APIにアクセスできません。
-                リアルタイムツイートを表示するには、バックエンドサーバーの構築が必要です。
-                現在はサンプルデータを表示しています。
-              </p>
-            </div>
           </motion.div>
         </div>
       </div>
