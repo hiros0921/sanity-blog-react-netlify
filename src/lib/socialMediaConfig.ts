@@ -20,8 +20,9 @@ export const socialMediaConfig = {
   // X (Twitter) API v2
   twitter: {
     username: 'hiros0921',
+    userId: '', // 後で自動取得
     bearerToken: import.meta.env.VITE_TWITTER_BEARER_TOKEN || '',
-    maxResults: 5,
+    maxResults: 10,
     // Twitter APIを使用するには、開発者アカウントとBearer Tokenが必要
   }
 }
@@ -106,6 +107,69 @@ export async function fetchYouTubeVideos() {
     console.error('Failed to fetch YouTube videos:', error)
   }
   return []
+}
+
+// Twitter API v2でツイートを取得する関数
+export async function fetchTwitterTweets() {
+  if (!socialMediaConfig.twitter.bearerToken) {
+    console.warn('Twitter Bearer Token not configured')
+    return []
+  }
+
+  try {
+    // まずユーザー情報を取得してIDを取得
+    const userResponse = await fetch(
+      `https://api.twitter.com/2/users/by/username/${socialMediaConfig.twitter.username}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${socialMediaConfig.twitter.bearerToken}`
+        }
+      }
+    )
+
+    if (!userResponse.ok) {
+      throw new Error(`Twitter API error: ${userResponse.status}`)
+    }
+
+    const userData = await userResponse.json()
+    const userId = userData.data?.id
+
+    if (!userId) {
+      throw new Error('User not found')
+    }
+
+    // ユーザーのツイートを取得
+    const tweetsResponse = await fetch(
+      `https://api.twitter.com/2/users/${userId}/tweets?max_results=${socialMediaConfig.twitter.maxResults}&tweet.fields=created_at,public_metrics,text`,
+      {
+        headers: {
+          'Authorization': `Bearer ${socialMediaConfig.twitter.bearerToken}`
+        }
+      }
+    )
+
+    if (!tweetsResponse.ok) {
+      throw new Error(`Twitter API error: ${tweetsResponse.status}`)
+    }
+
+    const tweetsData = await tweetsResponse.json()
+
+    if (tweetsData.data && tweetsData.data.length > 0) {
+      return tweetsData.data.map((tweet: any) => ({
+        id: tweet.id,
+        text: tweet.text,
+        createdAt: tweet.created_at,
+        likes: tweet.public_metrics?.like_count || 0,
+        retweets: tweet.public_metrics?.retweet_count || 0,
+        url: `https://twitter.com/${socialMediaConfig.twitter.username}/status/${tweet.id}`
+      }))
+    }
+
+    return []
+  } catch (error) {
+    console.error('Failed to fetch Twitter tweets:', error)
+    return []
+  }
 }
 
 // 自動更新の設定（分単位）

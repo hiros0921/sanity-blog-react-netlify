@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Youtube, Twitter, FileText, ExternalLink, RefreshCw, AlertCircle } from 'lucide-react'
 import OptimizedImage from './OptimizedImage'
-import { fetchNoteArticles, fetchYouTubeVideos } from '../lib/socialMediaConfig'
-import TwitterEmbed from './TwitterEmbed'
+import { fetchNoteArticles, fetchYouTubeVideos, fetchTwitterTweets } from '../lib/socialMediaConfig'
 
 // モックデータ（実際のAPIが利用できない場合のデモ用）
 const mockNoteArticles = [
@@ -84,7 +83,7 @@ export default function SocialMediaFeeds() {
   const [refreshing, setRefreshing] = useState(false)
   const [noteArticles, setNoteArticles] = useState(mockNoteArticles)
   const [youtubeVideos, setYoutubeVideos] = useState(mockYoutubeVideos)
-  const [tweets] = useState(mockTweets)
+  const [tweets, setTweets] = useState(mockTweets)
   const [loadingStates, setLoadingStates] = useState({
     note: false,
     youtube: false,
@@ -104,7 +103,8 @@ export default function SocialMediaFeeds() {
   const loadAllData = async () => {
     await Promise.all([
       loadNoteArticles(),
-      loadYouTubeVideos()
+      loadYouTubeVideos(),
+      loadTwitterTweets()
     ])
   }
 
@@ -137,6 +137,22 @@ export default function SocialMediaFeeds() {
       setErrors(prev => ({ ...prev, youtube: 'YouTube動画の取得に失敗しました' }))
     } finally {
       setLoadingStates(prev => ({ ...prev, youtube: false }))
+    }
+  }
+
+  const loadTwitterTweets = async () => {
+    setLoadingStates(prev => ({ ...prev, twitter: true }))
+    setErrors(prev => ({ ...prev, twitter: null }))
+    try {
+      const tweets = await fetchTwitterTweets()
+      if (tweets.length > 0) {
+        setTweets(tweets)
+      }
+    } catch (error) {
+      console.error('Failed to load Twitter tweets:', error)
+      setErrors(prev => ({ ...prev, twitter: 'Twitterツイートの取得に失敗しました' }))
+    } finally {
+      setLoadingStates(prev => ({ ...prev, twitter: false }))
     }
   }
 
@@ -329,35 +345,44 @@ export default function SocialMediaFeeds() {
               <h3 className="text-2xl font-bold text-white">X (Twitter)</h3>
             </div>
             
-            <div className="space-y-4">
-              {tweets.map((tweet) => (
-                <motion.div
-                  key={tweet.id}
-                  className="premium-card p-6 hover-lift"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <p className="text-white mb-3 text-sm leading-relaxed">
-                    {tweet.text}
-                  </p>
-                  <div className="flex items-center justify-between text-xs text-gray-500">
-                    <span>{new Date(tweet.createdAt).toLocaleDateString('ja-JP')}</span>
-                    <div className="flex items-center gap-4">
-                      <span className="flex items-center gap-1">
-                        ❤️ {tweet.likes}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        🔁 {tweet.retweets}
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            {errors.twitter && (
+              <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-4">
+                <div className="flex items-center gap-2 text-red-400">
+                  <AlertCircle className="w-5 h-5" />
+                  <span className="text-sm">{errors.twitter}</span>
+                </div>
+              </div>
+            )}
             
-            <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-              <p className="text-xs text-blue-400">
-                <span className="font-semibold">注：</span>Twitter APIの申請が承認され次第、リアルタイムのツイートが表示されます。
-              </p>
+            <div className="space-y-4">
+              {loadingStates.twitter && !tweets.length ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+                </div>
+              ) : (
+                tweets.map((tweet) => (
+                  <motion.div
+                    key={tweet.id}
+                    className="premium-card p-6 hover-lift"
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <p className="text-white mb-3 text-sm leading-relaxed">
+                      {tweet.text}
+                    </p>
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <span>{new Date(tweet.createdAt).toLocaleDateString('ja-JP')}</span>
+                      <div className="flex items-center gap-4">
+                        <span className="flex items-center gap-1">
+                          ❤️ {tweet.likes}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          🔁 {tweet.retweets}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))
+              )}
             </div>
             
             <a
