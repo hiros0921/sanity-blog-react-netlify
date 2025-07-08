@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Mail, Bell, Save, Check, X, 
+  Mail, Bell, Save, Check, 
   Newspaper, Tag, MessageSquare, CreditCard,
   Calendar, AlertCircle
 } from 'lucide-react';

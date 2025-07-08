@@ -7,14 +7,14 @@ import { fetchNoteArticles, fetchYouTubeVideos, fetchTwitterTweets } from '../li
 // モックデータ（実際のAPIが利用できない場合のデモ用）
 const mockNoteArticles = [
   {
-    id: 1,
+    id: "1",
     title: "最新のテクノロジートレンドについて",
     url: "https://note.com/ready_bison5376/n/xxxxx",
     publishedAt: "2025-01-04",
     excerpt: "AIとWeb3.0が変える未来のビジネス..."
   },
   {
-    id: 2,
+    id: "2",
     title: "プログラミング学習の効率的な方法",
     url: "https://note.com/ready_bison5376/n/xxxxx",
     publishedAt: "2025-01-03",
@@ -394,6 +394,15 @@ export default function SocialMediaFeeds() {
               プロフィールを見る
               <ExternalLink className="w-4 h-4" />
             </a>
+            
+            {/* CORS制限の説明 */}
+            <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+              <p className="text-xs text-blue-400">
+                <span className="font-semibold">注：</span>セキュリティ上の制限により、ブラウザから直接Twitter APIにアクセスできません。
+                リアルタイムツイートを表示するには、バックエンドサーバーの構築が必要です。
+                現在はサンプルデータを表示しています。
+              </p>
+            </div>
           </motion.div>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, Check, ChevronDown } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 import { changeLanguage, getCurrentLanguage, languageNames, supportedLanguages } from '../lib/i18n';
 import type { Language } from '../types/i18n';
 
@@ -14,7 +13,6 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   variant = 'dropdown',
   showLabel = true 
 }) => {
-  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isChanging, setIsChanging] = useState(false);
   const currentLanguage = getCurrentLanguage();

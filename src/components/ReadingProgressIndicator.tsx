@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { Clock, ChevronUp } from 'lucide-react';
 import type { ReadingTimeResult } from '../lib/readingTime';
 
@@ -113,6 +113,7 @@ const ReadingProgressIndicator: React.FC<ReadingProgressIndicatorProps> = ({
       stiffness: 100,
       damping: 30,
     });
+    const strokeDashoffset = useTransform(progress, [0, 1], [2 * Math.PI * 28, 0]);
 
     return (
       <motion.div
@@ -143,7 +144,7 @@ const ReadingProgressIndicator: React.FC<ReadingProgressIndicatorProps> = ({
               className={getColorClasses()}
               strokeDasharray={`${2 * Math.PI * 28}`}
               style={{
-                strokeDashoffset: progress.to(p => (1 - p) * 2 * Math.PI * 28),
+                strokeDashoffset,
               }}
             />
           </svg>
@@ -222,6 +223,7 @@ const ReadingProgressIndicator: React.FC<ReadingProgressIndicatorProps> = ({
 
   // フローティングバリアント
   if (variant === 'floating') {
+    const strokeDashoffset = useTransform(scrollYProgress, [0, 1], [2 * Math.PI * 20, 0]);
     return (
       <motion.div
         className={`fixed bottom-8 right-8 z-50 ${className}`}
@@ -252,7 +254,7 @@ const ReadingProgressIndicator: React.FC<ReadingProgressIndicatorProps> = ({
                 className={getColorClasses()}
                 strokeDasharray={`${2 * Math.PI * 20}`}
                 style={{
-                  strokeDashoffset: scrollYProgress.to(p => (1 - p) * 2 * Math.PI * 20),
+                  strokeDashoffset,
                 }}
               />
             </svg>

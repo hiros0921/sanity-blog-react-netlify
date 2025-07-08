@@ -6,9 +6,6 @@ class TranslationAPIService {
   private cache: Map<string, TranslationCache> = new Map();
   private readonly CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7日間
   
-  // Google翻訳APIのモック（実際の実装では本物のAPIを使用）
-  private readonly GOOGLE_TRANSLATE_API = 'https://translation.googleapis.com/language/translate/v2';
-  private readonly API_KEY = process.env.REACT_APP_GOOGLE_TRANSLATE_API_KEY || 'mock-api-key';
 
   private constructor() {
     this.loadCacheFromStorage();

@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   BarChart3, TrendingUp, DollarSign, Eye, MousePointer,
-  Target, Calendar, Filter, Download, AlertCircle,
+  Target, Download, AlertCircle,
   ChevronUp, ChevronDown
 } from 'lucide-react';
-import { sponsoredContentService } from '../lib/sponsoredContent';
-import { affiliateAdsService } from '../lib/affiliateAds';
-import type { AdPerformance, AdType } from '../types/advertising';
+import type { AdType } from '../types/advertising';
 
 const AdPerformanceDashboard: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d'>('30d');

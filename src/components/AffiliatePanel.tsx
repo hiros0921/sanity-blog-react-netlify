@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { 
   Users, Copy, Check, TrendingUp, DollarSign, 
   BarChart3, Share2, ExternalLink, Award,
-  Calendar, Target, Zap
+  Target, Zap
 } from 'lucide-react';
 import { affiliateService } from '../lib/affiliate';
 import type { AffiliateProgram } from '../types/membership';

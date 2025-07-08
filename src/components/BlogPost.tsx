@@ -16,7 +16,6 @@ import ReadingProgressIndicator from './ReadingProgressIndicator'
 import ReadingTimeDisplay from './ReadingTimeDisplay'
 import { userBehaviorTracker } from '../lib/userBehavior'
 import { readingTimeService } from '../lib/readingTime'
-import { useReadingProgress } from '../hooks/useReadingProgress'
 import { extractHeadingsFromPortableText, extractHeadingsFromDOM } from '../utils/extractHeadings'
 import type { Heading } from '../utils/extractHeadings'
 
@@ -71,15 +70,6 @@ export default function BlogPost() {
   const scrollDepthRef = useRef<number>(0)
   const articleRef = useRef<HTMLElement>(null)
   
-  // 読書進捗のフックを使用
-  const readingProgress = useReadingProgress({
-    onComplete: () => {
-      console.log('読書完了！')
-    },
-    onSectionChange: (section) => {
-      console.log('現在のセクション:', section)
-    }
-  })
 
   useEffect(() => {
     const fetchPost = async () => {

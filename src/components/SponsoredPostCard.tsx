@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, TrendingUp, Eye, MousePointer } from 'lucide-react';
+import { ExternalLink, Eye, MousePointer } from 'lucide-react';
 import { sponsoredContentService } from '../lib/sponsoredContent';
 import type { SponsoredPost } from '../types/advertising';
 

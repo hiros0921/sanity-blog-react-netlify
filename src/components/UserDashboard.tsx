@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   User, CreditCard, Gift, Users, Mail, Settings, 
-  TrendingUp, DollarSign, Calendar, Award, Bell,
-  Copy, Check, ExternalLink
+  TrendingUp, Calendar, Award, Bell
 } from 'lucide-react';
 import { authService } from '../lib/auth';
 import { stripeService } from '../lib/stripe';
 import { affiliateService } from '../lib/affiliate';
-import { emailNotificationService } from '../lib/emailNotification';
 import PaymentHistory from './PaymentHistory';
 import CouponManager from './CouponManager';
 import AffiliatePanel from './AffiliatePanel';

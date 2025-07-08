@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Download, CreditCard, Calendar, CheckCircle, XCircle, Clock } from 'lucide-react';
-import { stripeService } from '../lib/stripe';
 import type { Invoice } from '../types/membership';
 
 const PaymentHistory: React.FC = () => {

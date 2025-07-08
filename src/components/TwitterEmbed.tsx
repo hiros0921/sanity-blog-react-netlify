@@ -9,7 +9,6 @@ interface TwitterEmbedProps {
 
 export default function TwitterEmbed({ 
   username = 'hiros0921', 
-  limit = 5,
   theme = 'dark',
   height = 600 
 }: TwitterEmbedProps) {

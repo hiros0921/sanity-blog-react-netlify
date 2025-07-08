@@ -3,8 +3,6 @@ import { client, urlFor } from '../lib/sanity'
 import type { BlogPost } from '../types/blog'
 import SEO from './SEO'
 import ABTestBlogCard from './ABTestBlogCard'
-import { readingTimeService } from '../lib/readingTime'
-import ReadingTimeDisplay from './ReadingTimeDisplay'
 
 const BLOG_QUERY = `*[_type == "post"] | order(publishedAt desc) {
   _id,

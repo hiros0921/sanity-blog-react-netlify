@@ -64,7 +64,7 @@ i18n
     
     // キーが見つからない場合の設定
     saveMissing: true,
-    missingKeyHandler: (lng, ns, key, fallbackValue) => {
+    missingKeyHandler: (lng, ns, key) => {
       if (process.env.NODE_ENV === 'development') {
         console.warn(`Missing translation: ${lng}/${ns}/${key}`);
       }

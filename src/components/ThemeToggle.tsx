@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon, Monitor, Check, Palette } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
@@ -191,10 +191,8 @@ export const ThemeIndicator: React.FC = () => {
 // アニメーション付きテーマプレビュー
 export const ThemePreview: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const [previewTheme, setPreviewTheme] = useState<Theme | null>(null);
 
   const handlePreview = (newTheme: Theme) => {
-    setPreviewTheme(newTheme);
     // 一時的にプレビュー
     const root = document.documentElement;
     root.classList.add('theme-preview');
@@ -203,7 +201,6 @@ export const ThemePreview: React.FC = () => {
     setTimeout(() => {
       root.classList.remove('theme-preview');
       root.removeAttribute('data-theme-preview');
-      setPreviewTheme(null);
     }, 1000);
   };
 
@@ -214,7 +211,7 @@ export const ThemePreview: React.FC = () => {
           key={themeOption}
           onClick={() => setTheme(themeOption)}
           onHoverStart={() => handlePreview(themeOption)}
-          onHoverEnd={() => setPreviewTheme(null)}
+          onHoverEnd={() => handlePreview(theme)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={`relative p-4 rounded-lg border-2 transition-colors ${

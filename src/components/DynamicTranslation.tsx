@@ -17,8 +17,7 @@ export const DynamicTranslation: React.FC<DynamicTranslationProps> = ({
   text,
   sourceLang = 'ja',
   className = '',
-  fallback,
-  cache = true
+  fallback
 }) => {
   const { i18n } = useTranslation();
   const [translatedText, setTranslatedText] = useState<string>(text);

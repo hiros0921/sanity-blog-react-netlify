@@ -111,66 +111,68 @@ export async function fetchYouTubeVideos() {
 
 // Twitter API v2でツイートを取得する関数
 export async function fetchTwitterTweets() {
-  if (!socialMediaConfig.twitter.bearerToken) {
-    console.warn('Twitter Bearer Token not configured')
-    return []
-  }
-
   try {
-    // まずユーザー情報を取得してIDを取得
-    const userResponse = await fetch(
-      `https://api.twitter.com/2/users/by/username/${socialMediaConfig.twitter.username}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${socialMediaConfig.twitter.bearerToken}`
-        }
+    // Netlify Functionsを使用するかどうかを判定
+    const isNetlify = window.location.hostname.includes('netlify');
+    const isProduction = window.location.hostname !== 'localhost';
+    
+    if (isNetlify || isProduction) {
+      // 本番環境: Netlify Functionsを使用
+      console.log('Using Netlify Functions for Twitter API');
+      
+      // ユーザー情報を取得
+      const userResponse = await fetch(
+        `/.netlify/functions/twitter?endpoint=users/by/username/${socialMediaConfig.twitter.username}`
+      );
+      
+      if (!userResponse.ok) {
+        throw new Error(`Failed to fetch user: ${userResponse.status}`);
       }
-    )
-
-    if (!userResponse.ok) {
-      throw new Error(`Twitter API error: ${userResponse.status}`)
-    }
-
-    const userData = await userResponse.json()
-    const userId = userData.data?.id
-
-    if (!userId) {
-      throw new Error('User not found')
-    }
-
-    // ユーザーのツイートを取得
-    const tweetsResponse = await fetch(
-      `https://api.twitter.com/2/users/${userId}/tweets?max_results=${socialMediaConfig.twitter.maxResults}&tweet.fields=created_at,public_metrics,text`,
-      {
-        headers: {
-          'Authorization': `Bearer ${socialMediaConfig.twitter.bearerToken}`
-        }
+      
+      const userData = await userResponse.json();
+      const userId = userData.data?.id;
+      
+      if (!userId) {
+        throw new Error('User not found');
       }
-    )
-
-    if (!tweetsResponse.ok) {
-      throw new Error(`Twitter API error: ${tweetsResponse.status}`)
+      
+      // ツイートを取得
+      const tweetsResponse = await fetch(
+        `/.netlify/functions/twitter?endpoint=users/${userId}/tweets?max_results=${socialMediaConfig.twitter.maxResults}&tweet.fields=created_at,public_metrics,text`
+      );
+      
+      if (!tweetsResponse.ok) {
+        throw new Error(`Failed to fetch tweets: ${tweetsResponse.status}`);
+      }
+      
+      const tweetsData = await tweetsResponse.json();
+      
+      if (tweetsData.data && tweetsData.data.length > 0) {
+        return tweetsData.data.map((tweet: any) => ({
+          id: tweet.id,
+          text: tweet.text,
+          createdAt: tweet.created_at,
+          likes: tweet.public_metrics?.like_count || 0,
+          retweets: tweet.public_metrics?.retweet_count || 0,
+          url: `https://twitter.com/${socialMediaConfig.twitter.username}/status/${tweet.id}`
+        }));
+      }
+    } else {
+      // 開発環境: CORSの制限があるため、モックデータを使用
+      console.log('Development environment detected. Using mock data for Twitter.');
+      console.log('Deploy to Netlify to see real Twitter data.');
     }
-
-    const tweetsData = await tweetsResponse.json()
-
-    if (tweetsData.data && tweetsData.data.length > 0) {
-      return tweetsData.data.map((tweet: any) => ({
-        id: tweet.id,
-        text: tweet.text,
-        createdAt: tweet.created_at,
-        likes: tweet.public_metrics?.like_count || 0,
-        retweets: tweet.public_metrics?.retweet_count || 0,
-        url: `https://twitter.com/${socialMediaConfig.twitter.username}/status/${tweet.id}`
-      }))
-    }
-
-    return []
+    
+    return [];
   } catch (error) {
-    console.error('Failed to fetch Twitter tweets:', error)
-    return []
+    console.error('Failed to fetch Twitter tweets:', error);
+    return [];
   }
 }
+
+// 将来的な実装のためのプロキシURL例
+// const PROXY_URL = 'https://your-backend-server.com/api/twitter'
+// このようなバックエンドサーバーを構築することで、Twitter APIを使用できます
 
 // 自動更新の設定（分単位）
 export const updateIntervals = {

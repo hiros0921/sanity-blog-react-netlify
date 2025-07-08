@@ -1,5 +1,5 @@
 // 広告配置最適化とA/Bテスト管理サービス
-import type { AdPlacement, AdABTest, AdType, AdPosition } from '../types/advertising';
+import type { AdPlacement, AdABTest, AdPosition } from '../types/advertising';
 
 class AdOptimizationService {
   private static instance: AdOptimizationService;
@@ -238,11 +238,6 @@ class AdOptimizationService {
     this.saveABTest(test);
   }
 
-  // 広告配置の保存
-  private savePlacement(placement: AdPlacement): void {
-    this.placements.set(placement.id, placement);
-    // 実際の実装では、localStorage or API
-  }
 
   // A/Bテストの保存
   private saveABTest(test: AdABTest): void {

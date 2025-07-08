@@ -1,5 +1,5 @@
 // テーマ管理サービス
-import type { Theme, ThemeConfig, ThemeSettings, ThemeColors } from '../types/theme';
+import type { ThemeSettings } from '../types/theme';
 
 class ThemeService {
   private static instance: ThemeService;

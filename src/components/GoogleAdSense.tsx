@@ -171,13 +171,11 @@ export const AdPlacementWrapper: React.FC<{
   children: React.ReactNode;
 }> = ({ position, children }) => {
   const [isVisible, setIsVisible] = useState(position !== 'floating');
-  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     if (position !== 'floating') return;
 
     const handleScroll = () => {
-      setScrollY(window.scrollY);
       setIsVisible(window.scrollY > 300);
     };
 
