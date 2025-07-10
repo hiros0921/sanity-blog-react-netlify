@@ -1,5 +1,5 @@
-# Google Search Console verification files
-/google*.html    /google:splat.html   200!
+# Google Search Console verification files - exact match
+/google467851a69d4a4ba2.html    /google467851a69d4a4ba2.html   200!
 
 # SPA routing - must be last
 /*    /index.html   200
