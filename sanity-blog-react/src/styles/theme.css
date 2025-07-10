@@ -1,0 +1,176 @@
+/* テーマ関連のCSS */
+
+/* トランジション無効化クラス */
+.theme-transition-disable,
+.theme-transition-disable *,
+.theme-transition-disable *::before,
+.theme-transition-disable *::after {
+  transition: none !important;
+}
+
+/* テーマプレビュー時のスタイル */
+.theme-preview {
+  transition: all 0.3s ease-in-out;
+}
+
+/* ダークモード時のスクロールバー */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* カスタムスクロールバー */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500 dark:bg-gray-500;
+}
+
+/* Firefox用スクロールバー */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.gray.400') theme('colors.gray.100');
+}
+
+.dark * {
+  scrollbar-color: theme('colors.gray.600') theme('colors.gray.800');
+}
+
+/* セレクション（テキスト選択）のスタイル */
+::selection {
+  @apply bg-purple-200 dark:bg-purple-800 text-gray-900 dark:text-gray-100;
+}
+
+::-moz-selection {
+  @apply bg-purple-200 dark:bg-purple-800 text-gray-900 dark:text-gray-100;
+}
+
+/* フォーカススタイル */
+*:focus {
+  @apply outline-none;
+}
+
+*:focus-visible {
+  @apply ring-2 ring-purple-500 dark:ring-purple-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
+}
+
+/* ダークモードでの画像の明度調整 */
+.dark img:not(.no-dark-filter) {
+  filter: brightness(0.9);
+}
+
+/* ダークモードでのコードブロック */
+.dark pre,
+.dark code {
+  @apply bg-gray-800 text-gray-100;
+}
+
+/* ダークモードでのブロッククォート */
+.dark blockquote {
+  @apply border-gray-600 bg-gray-800;
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+/* グラデーションテキスト */
+.gradient-text {
+  @apply bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent;
+}
+
+.dark .gradient-text {
+  @apply from-purple-400 to-pink-400;
+}
+
+/* グラスモーフィズム効果 */
+.glass {
+  @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg;
+}
+
+.glass-border {
+  @apply border border-gray-200/50 dark:border-gray-700/50;
+}
+
+/* ダークモードでの影 */
+.dark .shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dark .shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dark .shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+.dark .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* カスタムボタンホバー効果 */
+.hover-lift {
+  @apply transition-all duration-300;
+}
+
+.hover-lift:hover {
+  @apply -translate-y-0.5 shadow-lg;
+}
+
+/* テーマ切り替えアニメーション */
+html {
+  transition: background-color var(--transition-duration) ease-in-out,
+              color var(--transition-duration) ease-in-out;
+}
+
+body {
+  @apply bg-background-primary text-text-primary;
+  transition: background-color var(--transition-duration) ease-in-out,
+              color var(--transition-duration) ease-in-out;
+}

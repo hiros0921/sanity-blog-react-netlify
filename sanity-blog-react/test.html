@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanity API Test</title>
+</head>
+<body>
+    <h1>Sanity API Test</h1>
+    <div id="result">Loading...</div>
+    
+    <script>
+        fetch('https://pv8y60vp.api.sanity.io/v2024-01-01/data/query/production?query=*[_type == "post"][0..5]')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = `
+                    <p>Found ${data.result.length} posts</p>
+                    <pre>${JSON.stringify(data.result, null, 2)}</pre>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = `Error: ${error.message}`;
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簡単メモアプリ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+        }
+
+        .add-note-section {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .note-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .note-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .add-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-btn:hover {
+            background-color: #45a049;
+        }
+
+        .add-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .notes-container {
+            padding: 20px;
+        }
+
+        .note-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .note-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .note-content {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .note-timestamp {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background-color: #1976D2;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .save-btn, .cancel-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .save-btn {
+            background-color: #4CAF50;
+            color: white;
+            margin-right: 5px;
+        }
+
+        .save-btn:hover {
+            background-color: #45a049;
+        }
+
+        .cancel-btn {
+            background-color: #757575;
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background-color: #616161;
+        }
+
+        .edit-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 80px;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+
+        .edit-textarea:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 40px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .add-note-section, .notes-container {
+                padding: 15px;
+            }
+            
+            .note-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 簡単メモアプリ</h1>
+            <p>思いついたことをすぐにメモしよう</p>
+        </div>
+
+        <div class="add-note-section">
+            <textarea 
+                id="noteInput" 
+                class="note-input" 
+                placeholder="ここにメモを入力してください..."></textarea>
+            <button id="addBtn" class="add-btn" onclick="addNote()">メモを追加</button>
+        </div>
+
+        <div class="notes-container">
+            <div id="notesList"></div>
+        </div>
+    </div>
+
+    <script>
+        let notes = JSON.parse(localStorage.getItem('notes')) || [];
+        let editingNoteId = null;
+
+        function saveNotes() {
+            localStorage.setItem('notes', JSON.stringify(notes));
+        }
+
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString('ja-JP', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function addNote() {
+            const input = document.getElementById('noteInput');
+            const content = input.value.trim();
+            
+            if (!content) {
+                alert('メモの内容を入力してください');
+                return;
+            }
+
+            const note = {
+                id: generateId(),
+                content: content,
+                timestamp: Date.now()
+            };
+
+            notes.unshift(note);
+            input.value = '';
+            saveNotes();
+            renderNotes();
+        }
+
+        function deleteNote(id) {
+            if (confirm('このメモを削除しますか？')) {
+                notes = notes.filter(note => note.id !== id);
+                saveNotes();
+                renderNotes();
+            }
+        }
+
+        function editNote(id) {
+            if (editingNoteId) {
+                cancelEdit();
+            }
+            
+            editingNoteId = id;
+            renderNotes();
+        }
+
+        function saveEdit(id) {
+            const textarea = document.querySelector(`#edit-${id}`);
+            const newContent = textarea.value.trim();
+            
+            if (!newContent) {
+                alert('メモの内容を入力してください');
+                return;
+            }
+
+            const noteIndex = notes.findIndex(note => note.id === id);
+            if (noteIndex !== -1) {
+                notes[noteIndex].content = newContent;
+                notes[noteIndex].timestamp = Date.now();
+                saveNotes();
+            }
+            
+            editingNoteId = null;
+            renderNotes();
+        }
+
+        function cancelEdit() {
+            editingNoteId = null;
+            renderNotes();
+        }
+
+        function renderNotes() {
+            const notesList = document.getElementById('notesList');
+            
+            if (notes.length === 0) {
+                notesList.innerHTML = '<div class="empty-state">まだメモがありません。<br>上の入力欄からメモを追加してみましょう！</div>';
+                return;
+            }
+
+            notesList.innerHTML = notes.map(note => {
+                if (editingNoteId === note.id) {
+                    return `
+                        <div class="note-item">
+                            <textarea id="edit-${note.id}" class="edit-textarea">${note.content}</textarea>
+                            <div class="note-actions">
+                                <button class="save-btn" onclick="saveEdit('${note.id}')">保存</button>
+                                <button class="cancel-btn" onclick="cancelEdit()">キャンセル</button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="note-item">
+                            <div class="note-content">${note.content}</div>
+                            <div class="note-timestamp">${formatDate(note.timestamp)}</div>
+                            <div class="note-actions">
+                                <button class="edit-btn" onclick="editNote('${note.id}')">編集</button>
+                                <button class="delete-btn" onclick="deleteNote('${note.id}')">削除</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        // キーボードショートカット
+        document.getElementById('noteInput').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                addNote();
+            }
+        });
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            renderNotes();
+        });
+    </script>
+</body>
+</html>
