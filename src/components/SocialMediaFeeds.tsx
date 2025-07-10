@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Youtube, Twitter, FileText, ExternalLink, RefreshCw, AlertCircle } from 'lucide-react'
 import OptimizedImage from './OptimizedImage'
 import TwitterEmbed from './TwitterEmbed'
-import { fetchNoteArticles, fetchYouTubeVideos, fetchTwitterTweets } from '../lib/socialMediaConfig'
+import { fetchNoteArticles, fetchYouTubeVideos } from '../lib/socialMediaConfig'
 
 // モックデータ（実際のAPIが利用できない場合のデモ用）
 const mockNoteArticles = [
@@ -42,49 +42,11 @@ const mockYoutubeVideos = [
   }
 ]
 
-const mockTweets = [
-  {
-    id: "1",
-    text: "TikTok×ChatGPT戦略〜ショート動画で月収100万円を目指す方法について新しいnote記事を公開しました！ #AI #TikTok #副業",
-    createdAt: "2025-01-07T10:00:00Z",
-    likes: 156,
-    retweets: 42
-  },
-  {
-    id: "2",
-    text: "最新のYouTube動画を公開！画像生成AIの活用方法について詳しく解説しています。ぜひご覧ください！ #AI #画像生成",
-    createdAt: "2025-01-06T15:30:00Z",
-    likes: 89,
-    retweets: 23
-  },
-  {
-    id: "3",
-    text: "Web3.0時代のビジネスモデルについて考察しました。分散型システムがもたらす新しい可能性とは？ #Web3 #ブロックチェーン",
-    createdAt: "2025-01-05T18:00:00Z",
-    likes: 67,
-    retweets: 15
-  },
-  {
-    id: "4",
-    text: "プログラミング初心者の方へ。まずはHTMLとCSSから始めることをおすすめします。基礎をしっかり固めることが大切です。 #プログラミング初心者",
-    createdAt: "2025-01-04T12:00:00Z",
-    likes: 234,
-    retweets: 78
-  },
-  {
-    id: "5",
-    text: "AIツールを使った効率的なコンテンツ制作のワークフローを確立しました。作業時間が1/3に短縮できています！ #AI活用 #生産性向上",
-    createdAt: "2025-01-03T09:00:00Z",
-    likes: 145,
-    retweets: 56
-  }
-]
 
 export default function SocialMediaFeeds() {
   const [refreshing, setRefreshing] = useState(false)
   const [noteArticles, setNoteArticles] = useState(mockNoteArticles)
   const [youtubeVideos, setYoutubeVideos] = useState(mockYoutubeVideos)
-  const [tweets, setTweets] = useState(mockTweets)
   const [loadingStates, setLoadingStates] = useState({
     note: false,
     youtube: false,
