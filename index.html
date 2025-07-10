@@ -52,15 +52,26 @@
     
     <!-- Optimize third-party scripts -->
     <script>
-      // Load Google Analytics after page load
+      // モバイルデバイスチェック
+      const isMobile = window.innerWidth < 640;
+      
+      // Load Google Analytics after page load (delayed more on mobile)
       window.addEventListener('load', () => {
         setTimeout(() => {
           const script = document.createElement('script');
           script.src = 'https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID';
           script.async = true;
           document.head.appendChild(script);
-        }, 3000);
+        }, isMobile ? 5000 : 3000);
       });
+      
+      // Preload critical resources for mobile
+      if (isMobile) {
+        // Remove heavy font weights for mobile
+        document.querySelectorAll('link[rel="preload"][href*="Inter"]').forEach(link => {
+          link.href = link.href.replace('wght@400;500;600;700', 'wght@400;600');
+        });
+      }
     </script>
   </body>
 </html>

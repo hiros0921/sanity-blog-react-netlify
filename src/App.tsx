@@ -17,7 +17,13 @@ import CommentModeration from './components/CommentModeration'
 import { usePageTracking } from './hooks/useAnalytics'
 
 // 遅延読み込みコンポーネント
-const PremiumHomePage = lazy(() => import('./components/OptimizedPremiumHomePage'))
+const PremiumHomePage = lazy(() => {
+  // モバイルデバイスの場合は軽量版を読み込む
+  const isMobile = window.innerWidth < 640
+  return isMobile 
+    ? import('./components/MobilePremiumHomePage')
+    : import('./components/OptimizedPremiumHomePage')
+})
 const BlogList = lazy(() => import('./components/BlogList'))
 const BlogPost = lazy(() => import('./components/BlogPost'))
 const VideosPage = lazy(() => import('./components/VideosPage'))
