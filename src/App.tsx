@@ -17,7 +17,7 @@ import CommentModeration from './components/CommentModeration'
 import { usePageTracking } from './hooks/useAnalytics'
 
 // 遅延読み込みコンポーネント
-const PremiumHomePage = lazy(() => import('./components/PremiumHomePage'))
+const PremiumHomePage = lazy(() => import('./components/OptimizedPremiumHomePage'))
 const BlogList = lazy(() => import('./components/BlogList'))
 const BlogPost = lazy(() => import('./components/BlogPost'))
 const VideosPage = lazy(() => import('./components/VideosPage'))
@@ -29,16 +29,7 @@ const PricingPage = lazy(() => import('./components/PricingPage'))
 const UserDashboard = lazy(() => import('./components/UserDashboard'))
 
 // ローディングコンポーネント
-function LoadingSpinner() {
-  return (
-    <div className="flex justify-center items-center min-h-[60vh]">
-      <div className="relative">
-        <div className="w-16 h-16 border-4 border-gray-200 rounded-full"></div>
-        <div className="w-16 h-16 border-4 border-blue-500 rounded-full absolute top-0 left-0 animate-spin border-t-transparent"></div>
-      </div>
-    </div>
-  )
-}
+const LoadingFallback = lazy(() => import('./components/LoadingFallback'))
 
 function App() {
   // ページトラッキングを有効化
@@ -60,7 +51,7 @@ function App() {
         <div className="min-h-screen flex flex-col">
           <PremiumHeader />
           <main className="flex-1">
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900" />}>
               <Routes>
                 <Route path="/" element={<PremiumHomePage />} />
                 <Route path="/blog" element={<BlogList />} />
