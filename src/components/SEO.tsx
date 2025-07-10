@@ -33,6 +33,9 @@ export default function SEO({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       {image && <meta name="twitter:image" content={image} />}
+      
+      {/* Google Search Console Verification */}
+      <meta name="google-site-verification" content="sHrnW0KAn2Chc-sW13Tx8pMClAbMKAN2e3_qldg6wog" />
     </Helmet>
   )
 }
