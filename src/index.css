@@ -1,12 +1,10 @@
+/* インポートは最初に配置 */
+@import './styles/theme.css';
+@import './styles/twitter-embed.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* テーマ関連のスタイル */
-@import './styles/theme.css';
-
-/* Twitter埋め込みスタイル */
-@import './styles/twitter-embed.css';
 
 @layer base {
   :root {

@@ -28,8 +28,6 @@ const BookmarksDashboard = lazy(() => import('./components/BookmarksDashboard'))
 const PricingPage = lazy(() => import('./components/PricingPage'))
 const UserDashboard = lazy(() => import('./components/UserDashboard'))
 
-// ローディングコンポーネント
-const LoadingFallback = lazy(() => import('./components/LoadingFallback'))
 
 function App() {
   // ページトラッキングを有効化
