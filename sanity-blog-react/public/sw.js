@@ -1,8 +1,8 @@
 // Service Worker - Advanced PWA Features
-const CACHE_NAME = 'hirosuwa-v2';
-const STATIC_CACHE = 'hirosuwa-static-v2';
-const DYNAMIC_CACHE = 'hirosuwa-dynamic-v2';
-const IMAGE_CACHE = 'hirosuwa-images-v2';
+const CACHE_NAME = 'hirosuwa-v3';
+const STATIC_CACHE = 'hirosuwa-static-v3';
+const DYNAMIC_CACHE = 'hirosuwa-dynamic-v3';
+const IMAGE_CACHE = 'hirosuwa-images-v3';
 
 // 静的リソースのキャッシュリスト
 const STATIC_ASSETS = [

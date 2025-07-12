@@ -1,7 +1,7 @@
 import { createClient } from '@sanity/client'
 
 export const client = createClient({
-  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'pv8y60vp',
+  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'ynritlpd',
   dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
   useCdn: false, // CDNを無効化してCORSエラーを回避
   apiVersion: '2024-01-01',

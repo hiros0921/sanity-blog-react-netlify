@@ -463,7 +463,9 @@ export default function BlogPost() {
             )}
             <div>
               <p className="font-semibold">{post.author.name}</p>
-              <p className="text-gray-600">{post.author.bio}</p>
+              <div className="text-gray-600">
+                <PortableText value={post.author.bio} />
+              </div>
             </div>
           </div>
         </div>
