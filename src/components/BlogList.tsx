@@ -66,6 +66,34 @@ export default function BlogList() {
               asset: { _id: "image-2", url: "https://images.unsplash.com/photo-1520085601670-ee14aa5fa3e8?w=800&q=80" },
               alt: "Blog post image"
             }
+          },
+          {
+            _id: "3",
+            _createdAt: "2025-01-05T00:00:00Z",
+            title: "3番目のブログ記事",
+            slug: { current: "third-blog" },
+            author: { _id: "1", name: "HiroSuwa" },
+            publishedAt: "2025-01-05T00:00:00Z",
+            excerpt: "これは3番目のブログ記事です。",
+            categories: [{ _id: "1", title: "テクノロジー", slug: { current: "tech" } }],
+            mainImage: {
+              asset: { _id: "image-3", url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80" },
+              alt: "Technology"
+            }
+          },
+          {
+            _id: "5",
+            _createdAt: "2025-01-07T00:00:00Z",
+            title: "5番目のブログ記事",
+            slug: { current: "fifth-blog" },
+            author: { _id: "1", name: "HiroSuwa" },
+            publishedAt: "2025-01-07T00:00:00Z",
+            excerpt: "これは5番目のブログ記事です。ついに動作しました！",
+            categories: [{ _id: "1", title: "成功", slug: { current: "success" } }],
+            mainImage: {
+              asset: { _id: "image-5", url: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&q=80" },
+              alt: "Coding"
+            }
           }
         ]
         setPosts(mockData as any)
