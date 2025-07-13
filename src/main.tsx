@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client'
 // Force rebuild - BrowserRouter fix
 console.log('App version: 1.0.1')
 import './index.css'
-import App from './App.tsx'
+// import App from './App.tsx'
+import App from './TestApp.tsx'
 import { reportWebVitals, addResourceHints } from './utils/performance'
 import { registerServiceWorker, initializeInstallPrompt, initializeOfflineDetection } from './utils/pwa'
 import { initializeGA, sendWebVitals } from './lib/analytics'
