@@ -101,7 +101,7 @@ const PersonalizedFeed: React.FC<PersonalizedFeedProps> = ({
               transition={{ delay: index * 0.1 }}
               className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
             >
-              <Link to={`/blog/${post.slug.current}`}>
+              <Link to={`/post/${post.slug.current}`}>
                 <div className="flex h-full">
                   {post.mainImage && (
                     <div className="w-1/3 overflow-hidden">

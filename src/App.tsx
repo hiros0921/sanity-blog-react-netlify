@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import './lib/i18n' // i18n初期化
 import { ThemeProvider } from './contexts/ThemeContext'

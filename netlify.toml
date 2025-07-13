@@ -20,6 +20,8 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  VITE_SANITY_PROJECT_ID = "ynritlpd"
+  VITE_SANITY_DATASET = "production"
 
 [[headers]]
   for = "/*"

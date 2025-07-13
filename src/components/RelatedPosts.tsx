@@ -105,7 +105,7 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({
               variants={itemVariants}
               className="group"
             >
-              <Link to={`/blog/${post.slug.current}`}>
+              <Link to={`/post/${post.slug.current}`}>
                 <div className="flex gap-4">
                   {post.mainImage && (
                     <div className="w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg">
