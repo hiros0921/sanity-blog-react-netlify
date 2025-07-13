@@ -34,16 +34,16 @@ const CACHE_STRATEGIES = {
 self.addEventListener('install', (event) => {
   console.log('Service Worker installing...');
   
+  // すべてのキャッシュを削除
   event.waitUntil(
-    caches.open(STATIC_CACHE)
-      .then((cache) => {
-        console.log('Caching static assets');
-        return cache.addAll(STATIC_ASSETS);
-      })
-      .then(() => {
-        // オフラインページを作成
-        return createOfflinePage();
-      })
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          console.log('Deleting cache:', cacheName);
+          return caches.delete(cacheName);
+        })
+      );
+    })
   );
   
   self.skipWaiting();
@@ -71,39 +71,10 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// フェッチイベントの処理
+// フェッチイベントの処理 - 一時的に無効化
 self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  const url = new URL(request.url);
-
-  // 同一オリジンのリクエストのみ処理
-  if (url.origin !== location.origin) {
-    return;
-  }
-
-  // リクエストタイプに応じた処理
-  if (request.method === 'GET') {
-    // 画像の処理
-    if (request.destination === 'image' || /\.(jpg|jpeg|png|gif|webp|avif|svg)$/i.test(url.pathname)) {
-      event.respondWith(handleImageRequest(request));
-      return;
-    }
-
-    // APIリクエストの処理
-    if (url.pathname.includes('/api/') || url.hostname.includes('sanity.io')) {
-      event.respondWith(handleApiRequest(request));
-      return;
-    }
-
-    // HTMLページの処理
-    if (request.headers.get('accept')?.includes('text/html')) {
-      event.respondWith(handlePageRequest(request));
-      return;
-    }
-
-    // その他の静的リソース
-    event.respondWith(handleStaticRequest(request));
-  }
+  // Service Workerを通さず、通常のネットワークリクエストを行う
+  return;
 });
 
 // 画像リクエストの処理（キャッシュファースト）
