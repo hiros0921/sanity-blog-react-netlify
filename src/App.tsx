@@ -15,7 +15,7 @@ import PushNotificationManager from './components/PushNotificationManager'
 import AnalyticsDashboard from './components/AnalyticsDashboard'
 import ABTestDashboard from './components/ABTestDashboard'
 import CommentModeration from './components/CommentModeration'
-// import { usePageTracking } from './hooks/useAnalytics'
+import { usePageTracking } from './hooks/useAnalytics'
 
 // 遅延読み込みコンポーネント
 const PremiumHomePage = lazy(() => {
