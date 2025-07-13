@@ -1,8 +1,8 @@
 // Service Worker - Advanced PWA Features
-const CACHE_NAME = 'hirosuwa-v2';
-const STATIC_CACHE = 'hirosuwa-static-v2';
-const DYNAMIC_CACHE = 'hirosuwa-dynamic-v2';
-const IMAGE_CACHE = 'hirosuwa-images-v2';
+const CACHE_NAME = 'hirosuwa-v3';
+const STATIC_CACHE = 'hirosuwa-static-v3';
+const DYNAMIC_CACHE = 'hirosuwa-dynamic-v3';
+const IMAGE_CACHE = 'hirosuwa-images-v3';
 
 // 静的リソースのキャッシュリスト
 const STATIC_ASSETS = [
@@ -57,7 +57,9 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (!Object.values(CACHE_STRATEGIES).some(strategy => strategy.cacheName === cacheName)) {
+          // 新しいキャッシュ名のリスト
+          const currentCaches = [STATIC_CACHE, DYNAMIC_CACHE, IMAGE_CACHE];
+          if (!currentCaches.includes(cacheName)) {
             console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
