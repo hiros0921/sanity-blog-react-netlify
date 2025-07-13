@@ -1,5 +1,7 @@
 // import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+// Force rebuild - BrowserRouter fix
+console.log('App version: 1.0.1')
 import './index.css'
 import App from './App.tsx'
 import { reportWebVitals, addResourceHints } from './utils/performance'
