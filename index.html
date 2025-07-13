@@ -49,6 +49,20 @@
   <body>
     <div id="root"></div>
     <script>
+      // URLを自動的に修正（#がない場合は追加）
+      (function() {
+        const path = window.location.pathname;
+        const hash = window.location.hash;
+        
+        // もし#がなく、パスが/以外の場合はHashRouterのフォーマットに修正
+        if (!hash && path !== '/' && path !== '/index.html') {
+          // /blog -> /#/blog
+          // /post/fifth-blog -> /#/post/fifth-blog
+          window.location.href = window.location.origin + '/#' + path;
+        }
+      })();
+    </script>
+    <script>
       // Service Workerを完全に削除
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistrations().then(function(registrations) {

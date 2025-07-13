@@ -4,6 +4,33 @@
   status = 200
   force = true
 
+# 特定のパスを自動的にHashRouterフォーマットにリダイレクト
+[[redirects]]
+  from = "/blog"
+  to = "/#/blog"
+  status = 301
+
+[[redirects]]
+  from = "/post/*"
+  to = "/#/post/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/videos"
+  to = "/#/videos"
+  status = 301
+
+[[redirects]]
+  from = "/profile"
+  to = "/#/profile"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/#/contact"
+  status = 301
+
+# その他全てのルートはindex.htmlへ
 [[redirects]]
   from = "/*"
   to = "/index.html"
