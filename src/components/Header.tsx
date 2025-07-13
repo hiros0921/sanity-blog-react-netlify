@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { Menu, X, Search, Moon, Sun } from 'lucide-react'
 
 export default function Header() {

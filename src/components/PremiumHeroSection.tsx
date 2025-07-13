@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { ArrowDown, Sparkles, Zap } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import ABTestButton from './ABTestButton'
 
 export default function PremiumHeroSection() {

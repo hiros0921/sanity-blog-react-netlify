@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Sparkles, Brain, TrendingUp, Clock, RefreshCw } from 'lucide-react';
 import type { BlogPost } from '../types/blog';

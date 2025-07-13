@@ -43,6 +43,6 @@ export default defineConfig({
     reportCompressedSize: false,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router'],
+    include: ['react', 'react-dom', 'react-router-dom'],
   },
 })

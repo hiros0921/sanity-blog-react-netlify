@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
-// React Router v7 - using createBrowserRouter
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router'
+// Force rebuild with BrowserRouter
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import './lib/i18n' // i18n初期化
 import { ThemeProvider } from './contexts/ThemeContext'
@@ -36,90 +36,44 @@ const PricingPage = lazy(() => import('./components/PricingPage'))
 const UserDashboard = lazy(() => import('./components/UserDashboard'))
 
 
-// Layout component that wraps all routes
-function RootLayout() {
-  // ページトラッキングを有効化 - useLocationはRouterProvider内でのみ使用可能
+function App() {
+  // ページトラッキングを有効化
   usePageTracking()
   
   return (
-    <>
-      <CustomCursor />
-      <OfflineIndicator />
-      <ImagePerformanceMonitor />
-      <PWAInstallPrompt />
-      <PWAUpdatePrompt />
-      <PushNotificationManager />
-      <AnalyticsDashboard />
-      <ABTestDashboard />
-      <CommentModeration />
-      <div className="min-h-screen flex flex-col">
-        <PremiumHeader />
-        <main className="flex-1">
-          <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900" />}>
-            <Outlet />
-          </Suspense>
-        </main>
-        <Footer />
-      </div>
-    </>
-  )
-}
-
-// Create router with routes
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <RootLayout />,
-    children: [
-      {
-        index: true,
-        element: <PremiumHomePage />
-      },
-      {
-        path: 'blog',
-        element: <BlogList />
-      },
-      {
-        path: 'post/:slug',
-        element: <BlogPost />
-      },
-      {
-        path: 'videos',
-        element: <VideosPage />
-      },
-      {
-        path: 'profile',
-        element: <UpdatedProfilePage />
-      },
-      {
-        path: 'contact',
-        element: <ContactPage />
-      },
-      {
-        path: 'code-samples',
-        element: <CodeDemoPage />
-      },
-      {
-        path: 'library',
-        element: <BookmarksDashboard />
-      },
-      {
-        path: 'pricing',
-        element: <PricingPage />
-      },
-      {
-        path: 'dashboard',
-        element: <UserDashboard />
-      }
-    ]
-  }
-])
-
-function App() {
-  return (
     <HelmetProvider>
       <ThemeProvider>
-        <RouterProvider router={router} />
+        <Router>
+        <CustomCursor />
+        <OfflineIndicator />
+        <ImagePerformanceMonitor />
+        <PWAInstallPrompt />
+        <PWAUpdatePrompt />
+        <PushNotificationManager />
+        <AnalyticsDashboard />
+        <ABTestDashboard />
+        <CommentModeration />
+        <div className="min-h-screen flex flex-col">
+          <PremiumHeader />
+          <main className="flex-1">
+            <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900" />}>
+              <Routes>
+                <Route path="/" element={<PremiumHomePage />} />
+                <Route path="/blog" element={<BlogList />} />
+                <Route path="/post/:slug" element={<BlogPost />} />
+                <Route path="/videos" element={<VideosPage />} />
+                <Route path="/profile" element={<UpdatedProfilePage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/code-samples" element={<CodeDemoPage />} />
+                <Route path="/library" element={<BookmarksDashboard />} />
+                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/dashboard" element={<UserDashboard />} />
+              </Routes>
+            </Suspense>
+          </main>
+          <Footer />
+        </div>
+        </Router>
       </ThemeProvider>
     </HelmetProvider>
   )

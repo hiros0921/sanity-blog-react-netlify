@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async'
-import { useLocation } from 'react-router'
+import { useLocation } from 'react-router-dom'
 
 interface EnhancedSEOProps {
   title: string

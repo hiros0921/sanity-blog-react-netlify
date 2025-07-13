@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Search, X, Clock, TrendingUp, Filter } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 
 interface SearchResult {
   id: string

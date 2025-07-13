@@ -1,13 +1,15 @@
 import { useEffect, useRef } from 'react'
-import { useLocation } from 'react-router'
-import { trackEvent, trackScrollDepth, trackReadingTime, trackPageView } from '../lib/analytics'
-import { setClarityPageTag } from '../lib/clarity'
-import { addBreadcrumb } from '../lib/sentry'
+// import { useLocation } from 'react-router-dom'
+import { trackEvent, trackScrollDepth, trackReadingTime } from '../lib/analytics'
+// import { trackPageView } from '../lib/analytics'
+// import { setClarityPageTag } from '../lib/clarity'
+// import { addBreadcrumb } from '../lib/sentry'
 
 // ページビュートラッキングフック
 export function usePageTracking() {
-  const location = useLocation()
-  const prevPathRef = useRef<string | undefined>(undefined)
+  return // 一時的に無効化
+  /* const location = useLocation()
+  const prevPathRef = useRef<string>()
 
   useEffect(() => {
     if (location.pathname !== prevPathRef.current) {
@@ -26,7 +28,7 @@ export function usePageTracking() {
       
       prevPathRef.current = location.pathname
     }
-  }, [location])
+  }, [location]) */
 }
 
 // スクロール深度トラッキングフック
