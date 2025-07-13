@@ -29,10 +29,10 @@ if ('web-vital' in window) {
   })
 }
 
-// PWA初期化
-registerServiceWorker()
-initializeInstallPrompt()
-initializeOfflineDetection()
+// PWA初期化 - 一時的に無効化
+// registerServiceWorker()
+// initializeInstallPrompt()
+// initializeOfflineDetection()
 
 createRoot(document.getElementById('root')!).render(
   <App />
