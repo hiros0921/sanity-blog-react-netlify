@@ -1,11 +1,11 @@
 // import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 // Force rebuild - BrowserRouter fix
-console.log('App version: 1.0.1')
+console.log('App version: 1.0.2 - Full React App restored')
 import './index.css'
 import App from './App.tsx'
 import { reportWebVitals, addResourceHints } from './utils/performance'
-import { registerServiceWorker, initializeInstallPrompt, initializeOfflineDetection } from './utils/pwa'
+// import { registerServiceWorker, initializeInstallPrompt, initializeOfflineDetection } from './utils/pwa'
 import { initializeGA, sendWebVitals } from './lib/analytics'
 import { initializeClarity } from './lib/clarity'
 import { initializeSentry } from './lib/sentry'
