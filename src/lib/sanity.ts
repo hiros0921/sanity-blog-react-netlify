@@ -3,9 +3,10 @@ import { createClient } from '@sanity/client'
 export const client = createClient({
   projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'ynritlpd',
   dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
-  useCdn: false, // CDNを無効化してCORSエラーを回避
+  useCdn: true, // 本番環境ではCDNを有効化
   apiVersion: '2024-01-01',
   token: undefined, // 公開データのみアクセス
+  perspective: 'published', // 公開されたコンテンツのみ取得
 })
 
 console.log('Sanity config:', {

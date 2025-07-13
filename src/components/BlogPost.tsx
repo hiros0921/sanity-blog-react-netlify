@@ -74,14 +74,20 @@ export default function BlogPost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        console.log('Attempting to fetch post with slug:', slug)
         const [postData, allPostsData] = await Promise.all([
           client.fetch(POST_QUERY, { slug }),
           client.fetch(ALL_POSTS_QUERY)
         ])
         console.log('Fetched post:', postData)
-        console.log('Slug:', slug)
-        setPost(postData)
-        setAllPosts(allPostsData)
+        console.log('All posts:', allPostsData)
+        
+        if (postData) {
+          setPost(postData)
+          setAllPosts(allPostsData)
+        } else {
+          throw new Error('Post not found')
+        }
       } catch (error) {
         console.error('Error fetching post:', error)
         // モックデータで記事詳細を表示
