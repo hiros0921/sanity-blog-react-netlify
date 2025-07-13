@@ -38,7 +38,7 @@ const UserDashboard = lazy(() => import('./components/UserDashboard'))
 
 function App() {
   // ページトラッキングを有効化
-  usePageTracking()
+  // usePageTracking() // 一時的に無効化
   
   return (
     <HelmetProvider>
