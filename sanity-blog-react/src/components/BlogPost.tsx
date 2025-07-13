@@ -463,9 +463,11 @@ export default function BlogPost() {
             )}
             <div>
               <p className="font-semibold">{post.author.name}</p>
-              <div className="text-gray-600">
-                <PortableText value={post.author.bio} />
-              </div>
+              {post.author.bio && (
+                <div className="text-gray-600">
+                  <PortableText value={post.author.bio} />
+                </div>
+              )}
             </div>
           </div>
         </div>
