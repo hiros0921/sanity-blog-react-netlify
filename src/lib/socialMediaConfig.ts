@@ -29,6 +29,9 @@ export const socialMediaConfig = {
 
 // RSS フィードを取得する関数
 export async function fetchNoteArticles() {
+  // 一時的に無効化 - CORSエラーを回避
+  return []
+  
   try {
     console.log('Fetching note articles from:', socialMediaConfig.note.rssFeedUrl)
     
@@ -83,6 +86,9 @@ export async function fetchNoteArticles() {
 
 // YouTube動画を取得する関数
 export async function fetchYouTubeVideos() {
+  // 一時的に無効化 - APIエラーを回避
+  return []
+  
   if (!socialMediaConfig.youtube.apiKey) {
     console.warn('YouTube API key not configured')
     return []
