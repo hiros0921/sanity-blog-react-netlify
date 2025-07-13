@@ -78,6 +78,8 @@ export default function BlogPost() {
           client.fetch(POST_QUERY, { slug }),
           client.fetch(ALL_POSTS_QUERY)
         ])
+        console.log('Fetched post:', postData)
+        console.log('Slug:', slug)
         setPost(postData)
         setAllPosts(allPostsData)
       } catch (error) {
@@ -85,6 +87,30 @@ export default function BlogPost() {
         // モックデータで記事詳細を表示
         console.log('BlogPost: API error, using mock data. Slug:', slug)
         const mockPosts: Record<string, any> = {
+          'first-post': {
+            _id: "first",
+            _createdAt: "2025-01-03T00:00:00Z",
+            title: "最初のブログ記事",
+            slug: { current: "first-post" },
+            author: { _id: "1", name: "HiroSuwa", bio: "ブログの著者です。" },
+            publishedAt: "2025-01-03T00:00:00Z",
+            body: [
+              {
+                _type: "block",
+                children: [
+                  {
+                    _type: "span",
+                    text: "これは最初のブログ記事です。Sanityに接続できていない場合のテスト表示です。"
+                  }
+                ],
+                style: "normal"
+              }
+            ],
+            mainImage: {
+              asset: { _id: "image-1", url: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80" },
+              alt: "First blog post"
+            }
+          },
           'test-post-1': {
             _id: "1",
             _createdAt: "2025-01-01T00:00:00Z",
@@ -135,6 +161,55 @@ export default function BlogPost() {
                 style: "normal"
               }
             ]
+          },
+          'third-blog': {
+            _id: "3",
+            _createdAt: "2025-01-05T00:00:00Z",
+            title: "3番目のブログ記事",
+            slug: { current: "third-blog" },
+            author: { _id: "1", name: "HiroSuwa", bio: "ブログの著者です。" },
+            publishedAt: "2025-01-05T00:00:00Z",
+            categories: [{ _id: "1", title: "テクノロジー", slug: { current: "tech" } }],
+            body: [
+              {
+                _type: "block",
+                children: [
+                  {
+                    _type: "span",
+                    text: "これは3番目のブログ記事です。ついに個別記事ページが表示できるようになりました！"
+                  }
+                ],
+                style: "normal"
+              }
+            ],
+            mainImage: {
+              asset: { _id: "image-3", url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80" },
+              alt: "Technology"
+            }
+          },
+          'fifth-blog': {
+            _id: "5",
+            _createdAt: "2025-01-07T00:00:00Z",
+            title: "5番目のブログ記事",
+            slug: { current: "fifth-blog" },
+            author: { _id: "1", name: "HiroSuwa", bio: "ブログの著者です。" },
+            publishedAt: "2025-01-07T00:00:00Z",
+            body: [
+              {
+                _type: "block",
+                children: [
+                  {
+                    _type: "span",
+                    text: "これは5番目のブログ記事です。React RouterとNetlifyの設定が正しく動作しています！"
+                  }
+                ],
+                style: "normal"
+              }
+            ],
+            mainImage: {
+              asset: { _id: "image-5", url: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&q=80" },
+              alt: "Coding"
+            }
           }
         }
         
