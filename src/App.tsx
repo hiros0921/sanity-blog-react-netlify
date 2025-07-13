@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
-// Using BrowserRouter instead of HashRouter for proper URLs
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+// Using HashRouter for consistent routing across all environments
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import './lib/i18n' // i18n初期化
 import { ThemeProvider } from './contexts/ThemeContext'
