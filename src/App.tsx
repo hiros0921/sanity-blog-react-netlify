@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react'
+// Force rebuild with BrowserRouter
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import './lib/i18n' // i18n初期化
