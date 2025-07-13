@@ -22,6 +22,7 @@
   NODE_VERSION = "18"
   VITE_SANITY_PROJECT_ID = "ynritlpd"
   VITE_SANITY_DATASET = "production"
+  VITE_PUBLIC_URL = "https://steady-chebakia-9c5055.netlify.app"
 
 [[headers]]
   for = "/*"
