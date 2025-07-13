@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router'
 import { PortableText } from '@portabletext/react'
 import { client, urlFor } from '../lib/sanity'
 import type { BlogPost as BlogPostType } from '../types/blog'

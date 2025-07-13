@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { format } from 'date-fns'
 import { ja } from 'date-fns/locale'
 import { Clock, ArrowRight, Calendar } from 'lucide-react'

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Calendar, Clock, Eye, TrendingUp } from 'lucide-react'
 import { urlFor } from '../lib/sanity'
 import OptimizedImage from './OptimizedImage'
