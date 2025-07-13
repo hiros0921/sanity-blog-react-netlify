@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page - HiroSuwa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .status {
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>HiroSuwa.com テストページ</h1>
+    
+    <div class="status">
+        <h2>現在の状態:</h2>
+        <p><strong>URL:</strong> <span id="current-url"></span></p>
+        <p><strong>ホスト:</strong> <span id="current-host"></span></p>
+        <p><strong>プロトコル:</strong> <span id="current-protocol"></span></p>
+        <p><strong>時刻:</strong> <span id="current-time"></span></p>
+    </div>
+    
+    <div class="status">
+        <h2>静的ファイルテスト:</h2>
+        <p>画像読み込み: <img src="/vite.svg" width="20" height="20" onerror="this.parentElement.classList.add('error')" onload="this.parentElement.classList.add('success')"> <span id="img-status"></span></p>
+    </div>
+    
+    <div class="status">
+        <h2>リンクテスト:</h2>
+        <p><a href="/">ホームページへ</a></p>
+        <p><a href="/blog">ブログ一覧へ</a></p>
+        <p><a href="/post/third-blog">ブログ記事へ</a></p>
+    </div>
+    
+    <script>
+        // 現在の情報を表示
+        document.getElementById('current-url').textContent = window.location.href;
+        document.getElementById('current-host').textContent = window.location.host;
+        document.getElementById('current-protocol').textContent = window.location.protocol;
+        document.getElementById('current-time').textContent = new Date().toLocaleString('ja-JP');
+        
+        // 画像読み込みステータス
+        setTimeout(() => {
+            const img = document.querySelector('img');
+            const imgStatus = document.getElementById('img-status');
+            if (img.complete && img.naturalHeight !== 0) {
+                imgStatus.textContent = '✅ 成功';
+                imgStatus.classList.add('success');
+            } else {
+                imgStatus.textContent = '❌ 失敗';
+                imgStatus.classList.add('error');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
