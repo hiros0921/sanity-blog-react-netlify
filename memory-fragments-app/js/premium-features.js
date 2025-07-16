@@ -129,14 +129,20 @@ class PremiumFeatures {
 
     // アップグレード処理を開始
     startUpgrade() {
-        // Stripe決済画面へ遷移（実装時）
-        alert('決済システムは準備中です。\n実装時にはStripeを使用した安全な決済が可能になります。');
-        
-        // デモ用：プランを切り替え
-        if (confirm('デモ：プレミアムプランに切り替えますか？')) {
-            const storageManager = new StorageManager();
-            storageManager.setUserPlan('premium');
-            location.reload();
+        // Stripe決済が利用可能か確認
+        if (window.stripePayment && window.stripePayment.stripe) {
+            // Stripe決済を開始
+            window.stripePayment.startCheckout();
+        } else {
+            // Stripe未設定の場合はデモモード
+            alert('決済システムは準備中です。\n実装時にはStripeを使用した安全な決済が可能になります。');
+            
+            // デモ用：プランを切り替え
+            if (confirm('デモ：プレミアムプランに切り替えますか？')) {
+                const storageManager = new StorageManager();
+                storageManager.setUserPlan('premium');
+                location.reload();
+            }
         }
     }
 
