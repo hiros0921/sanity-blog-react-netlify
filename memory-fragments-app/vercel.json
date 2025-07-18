@@ -1,20 +1,20 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/",
-      "dest": "/landing.html"
+      "source": "/",
+      "destination": "/landing.html"
     },
     {
-      "src": "/app",
-      "dest": "/index.html"
+      "source": "/app",
+      "destination": "/index.html"
     },
     {
-      "src": "/landing",
-      "dest": "/landing.html"
+      "source": "/landing",
+      "destination": "/landing.html"
     },
     {
-      "src": "/transaction-law",
-      "dest": "/transaction-law.html"
+      "source": "/transaction-law",
+      "destination": "/transaction-law.html"
     }
   ],
   "headers": [
