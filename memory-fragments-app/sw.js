@@ -1,5 +1,5 @@
 // Service Worker for offline support
-const CACHE_VERSION = 3;
+const CACHE_VERSION = 4;
 const CACHE_NAME = 'memory-fragments-v' + CACHE_VERSION;
 const urlsToCache = [
     './',
@@ -13,7 +13,8 @@ const urlsToCache = [
     './js/toast-notification.js',
     './js/onboarding.js',
     './js/analytics.js',
-    './js/memory-templates.js'
+    './js/memory-templates.js',
+    './js/local-db.js'
     // 外部URLはキャッシュから除外（CORSエラー回避）
 ];
 

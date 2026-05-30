@@ -7,13 +7,38 @@
     }
   }
 
-  function readLocalMemories() {
-    const raw = localStorage.getItem('memories');
-    return Array.isArray(raw) ? raw : safeJsonParse(raw || '[]', []);
+  // IndexedDB版 (LocalDB が読み込まれていれば使用)
+  function readLocalMemoriesAsync() {
+    if (global.LocalDB) {
+      return global.LocalDB.get('memories').then(function(data) {
+        return Array.isArray(data) ? data : [];
+      });
+    }
+    // フォールバック: localStorage
+    return Promise.resolve(readLocalMemoriesSync());
   }
 
-  function writeLocalMemories(memories) {
-    localStorage.setItem('memories', JSON.stringify(memories));
+  function writeLocalMemoriesAsync(memories) {
+    if (global.LocalDB) {
+      return global.LocalDB.set('memories', memories);
+    }
+    // フォールバック: localStorage (try-catch付き)
+    try {
+      localStorage.setItem('memories', JSON.stringify(memories));
+    } catch (e) {
+      console.warn('localStorage write failed:', e.name);
+    }
+    return Promise.resolve();
+  }
+
+  // 同期版 (フォールバック用)
+  function readLocalMemoriesSync() {
+    try {
+      var raw = localStorage.getItem('memories');
+      return Array.isArray(raw) ? raw : safeJsonParse(raw || '[]', []);
+    } catch (e) {
+      return [];
+    }
   }
 
   class MemoryRepository {
@@ -21,26 +46,36 @@
       this.db = db;
     }
 
-    listLocal() {
-      return readLocalMemories();
+    // 非同期版
+    async listLocalAsync() {
+      return readLocalMemoriesAsync();
     }
 
-    saveLocal(memory, { prepend = true } = {}) {
-      const memories = readLocalMemories();
-      const id = memory.id || Date.now().toString();
-      const stored = { ...memory, id };
+    // 同期版 (後方互換)
+    listLocal() {
+      return readLocalMemoriesSync();
+    }
+
+    async saveLocal(memory, { prepend = true } = {}) {
+      var memories = await readLocalMemoriesAsync();
+      var id = memory.id || Date.now().toString();
+      var stored = { ...memory, id };
       if (prepend) {
         memories.unshift(stored);
       } else {
         memories.push(stored);
       }
-      writeLocalMemories(memories);
+      await writeLocalMemoriesAsync(memories);
       return stored;
     }
 
-    getLocalById(id) {
-      const memories = readLocalMemories();
+    async getLocalById(id) {
+      var memories = await readLocalMemoriesAsync();
       return memories.find((m) => String(m.id) === String(id)) || null;
+    }
+
+    async writeLocalMemories(memories) {
+      return writeLocalMemoriesAsync(memories);
     }
 
     async addForUser({ uid, memory }) {
@@ -69,4 +104,3 @@
   global.AppServices = global.AppServices || {};
   global.AppServices.MemoryRepository = MemoryRepository;
 })(window);
-

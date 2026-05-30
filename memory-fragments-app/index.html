@@ -731,6 +731,9 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-functions-compat.js"></script>
     
+    <!-- IndexedDB wrapper (localStorage置き換え) -->
+    <script src="/js/local-db.js"></script>
+
     <!-- App services (責務分離の土台) -->
     <script src="/js/app/config/constants.js"></script>
     <script src="/js/app/services/memory-repository.js"></script>
@@ -756,7 +759,12 @@
         const storage = firebase.storage();
         const db = firebase.firestore();
         const functions = firebase.functions();
-        
+
+        // localStorage → IndexedDB 移行
+        if (typeof LocalDB !== 'undefined') {
+            LocalDB.migrateFromLocalStorage();
+        }
+
         // Initialize Stripe
         const stripe = Stripe('pk_test_51RltmW2L9dU9afFcgj3IibP3Jm6bg23agDjacAWw6uF5O4X9YwAViLUIYDHYKCIJ7t0OvDJhVrKIrZek68O8YZQ100VvOyZoue');
         
@@ -1158,15 +1166,18 @@
 
             try {
                 memories = await memoryService.listForUser({ uid: currentUser.uid });
-                try {
-                    localStorage.setItem('memories', JSON.stringify(memories));
-                } catch (storageError) {
-                    console.warn('localStorage容量超過。キャッシュをクリアします:', storageError.name);
-                    try { localStorage.removeItem('memories'); } catch(e) {}
+                // IndexedDBにキャッシュ（容量制限なし）
+                if (memoryRepository.writeLocalMemories) {
+                    memoryRepository.writeLocalMemories(memories).catch(function() {});
                 }
             } catch (error) {
                 console.error('読み込みエラー:', error);
-                memories = memoryService.listLocal();
+                // オフライン時はIndexedDBフォールバック
+                if (memoryRepository.listLocalAsync) {
+                    memories = await memoryRepository.listLocalAsync();
+                } else {
+                    memories = memoryService.listLocal();
+                }
             }
 
             displayMemories();
@@ -1365,11 +1376,8 @@
             }
             
             memories = memories.filter(m => m.id !== id);
-            try {
-                localStorage.setItem('memories', JSON.stringify(memories));
-            } catch (storageError) {
-                console.warn('localStorage容量超過:', storageError.name);
-                try { localStorage.removeItem('memories'); } catch(e) {}
+            if (memoryRepository.writeLocalMemories) {
+                memoryRepository.writeLocalMemories(memories).catch(function() {});
             }
             displayMemories();
         }
@@ -1537,16 +1545,27 @@
                     authSection.style.visibility = 'visible';
                 }
                 
-                // ローカルストレージから記憶を表示
-                const localMemories = localStorage.getItem('memories');
-                if (localMemories) {
-                    memories = JSON.parse(localMemories);
-                    displayMemories();
-                } else {
-                    // 記憶がない場合は空のグリッドを表示
-                    const grid = document.getElementById('memoriesGrid');
-                    grid.innerHTML = '';
-                }
+                // IndexedDBから記憶を表示
+                (async function() {
+                    try {
+                        if (memoryRepository.listLocalAsync) {
+                            var localMems = await memoryRepository.listLocalAsync();
+                        } else {
+                            var raw = localStorage.getItem('memories');
+                            var localMems = raw ? JSON.parse(raw) : [];
+                        }
+                        if (localMems && localMems.length > 0) {
+                            memories = localMems;
+                            displayMemories();
+                        } else {
+                            var grid = document.getElementById('memoriesGrid');
+                            if (grid) grid.innerHTML = '';
+                        }
+                    } catch(e) {
+                        var grid = document.getElementById('memoriesGrid');
+                        if (grid) grid.innerHTML = '';
+                    }
+                })();
             }
         }
 
@@ -2496,12 +2515,18 @@
                 }
             }
             
-            // ローカルストレージのメモリをロード（認証前でも表示できるように）
-            const localMemories = localStorage.getItem('memories');
-            if (localMemories) {
-                memories = JSON.parse(localMemories);
+            // IndexedDBからメモリをロード（認証前でも表示できるように）
+            try {
+                if (typeof LocalDB !== 'undefined') {
+                    var cachedMemories = await LocalDB.get('memories');
+                    if (Array.isArray(cachedMemories) && cachedMemories.length > 0) {
+                        memories = cachedMemories;
+                    }
+                }
+            } catch(e) {
+                console.warn('IndexedDB pre-auth load failed:', e);
             }
-            
+
             if (memoryId && !currentUser) {
                 // 認証前に個別記憶を表示
                 console.log('Checking memory before auth:', memoryId);
