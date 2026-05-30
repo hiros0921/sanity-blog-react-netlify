@@ -2516,15 +2516,12 @@
             }
             
             // IndexedDBからメモリをロード（認証前でも表示できるように）
-            try {
-                if (typeof LocalDB !== 'undefined') {
-                    var cachedMemories = await LocalDB.get('memories');
+            if (typeof LocalDB !== 'undefined') {
+                LocalDB.get('memories').then(function(cachedMemories) {
                     if (Array.isArray(cachedMemories) && cachedMemories.length > 0) {
                         memories = cachedMemories;
                     }
-                }
-            } catch(e) {
-                console.warn('IndexedDB pre-auth load failed:', e);
+                }).catch(function() {});
             }
 
             if (memoryId && !currentUser) {
