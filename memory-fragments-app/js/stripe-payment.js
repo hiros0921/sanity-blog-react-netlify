@@ -1,10 +1,10 @@
 // Stripe決済機能の実装
 class StripePayment {
     constructor() {
-        // TODO: 本番環境では環境変数から読み込む
-        this.publishableKey = 'pk_test_51xxxxxxxxxxxxx'; // Stripeダッシュボードから取得
+        // 本番環境設定
+        this.publishableKey = 'pk_live_51RltmMRritviSYbG5O496YZAUFGIfSiY5rpnvC3ywQ5YglzwjznE8cbKKCdYPUsVD0vsANHD9P2lgFcGFWxBM1jv00rle8KthP'; // Stripe本番公開キー
         this.stripe = null;
-        this.priceId = 'price_xxxxxxxxxxxxx'; // 月額プランの価格ID
+        this.priceId = 'price_1Rtt4MRritviSYbGuwIDp1WW'; // 月額500円プラン本番価格ID
         
         this.init();
     }
@@ -17,8 +17,18 @@ class StripePayment {
             return;
         }
 
-        this.stripe = Stripe(this.publishableKey);
-        this.setupEventListeners();
+        // Stripeキーが設定されていない場合はスキップ
+        if (this.publishableKey.includes('xxxxx')) {
+            console.log('Stripe: テストキーが設定されていません。決済機能は無効です。');
+            return;
+        }
+
+        try {
+            this.stripe = Stripe(this.publishableKey);
+            this.setupEventListeners();
+        } catch (error) {
+            console.error('Stripe初期化エラー:', error);
+        }
     }
 
     setupEventListeners() {
@@ -176,5 +186,9 @@ window.StripePayment = StripePayment;
 
 // ページ読み込み時に初期化
 document.addEventListener('DOMContentLoaded', () => {
-    window.stripePayment = new StripePayment();
+    try {
+        window.stripePayment = new StripePayment();
+    } catch (error) {
+        console.error('StripePayment初期化エラー:', error);
+    }
 });

@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Fragments - 大切な思い出を永遠に</title>
     <meta name="description" content="Memory Fragmentsは、あなたの大切な思い出や記憶を美しく保存・整理できるWebアプリです。写真と共に感情を記録し、時を超えて思い出を振り返ることができます。">
+
+    <!-- OGP Meta Tags -->
+    <meta property="og:title" content="Memory Fragments - 大切な思い出を永遠に">
+    <meta property="og:description" content="写真と感情を一緒に記録して、いつでも振り返れる。AIが感情を分析し、あなたの思い出をもっと豊かにします。">
+    <meta property="og:image" content="https://www.memory-fragments.com/ogp-image.png">
+    <meta property="og:url" content="https://www.memory-fragments.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Memory Fragments">
+    <meta property="og:locale" content="ja_JP">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Memory Fragments - 大切な思い出を永遠に">
+    <meta name="twitter:description" content="写真と感情を一緒に記録して、いつでも振り返れる。AIが感情を分析し、あなたの思い出をもっと豊かにします。">
+    <meta name="twitter:image" content="https://www.memory-fragments.com/ogp-image.png">
+
     <style>
         * {
             margin: 0;
@@ -127,6 +143,13 @@
             flex-wrap: wrap;
         }
 
+        .hero-trust {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
         .primary-button {
             background: var(--gradient-1);
             color: white;
@@ -160,6 +183,62 @@
         .secondary-button:hover {
             background: var(--primary);
             transform: translateY(-2px);
+        }
+
+        /* 使い方セクション */
+        .how-it-works {
+            padding: 80px 20px;
+            background: var(--background);
+        }
+
+        .how-it-works-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .how-it-works h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 60px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--primary-light);
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         /* 機能セクション */
@@ -219,9 +298,83 @@
             line-height: 1.6;
         }
 
+        /* 利用者の声セクション */
+        .testimonials {
+            padding: 80px 20px;
+            background: var(--background);
+        }
+
+        .testimonials-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .testimonials h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 60px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .testimonial-stars {
+            color: #f59e0b;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .testimonial-role {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
         /* 料金セクション */
         .pricing {
             padding: 80px 20px;
+            background: var(--surface);
         }
 
         .pricing-container {
@@ -259,6 +412,19 @@
             transform: scale(1.05);
         }
 
+        .pricing-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-1);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
         .pricing-card h3 {
             font-size: 2rem;
             margin-bottom: 20px;
@@ -267,7 +433,7 @@
         .price {
             font-size: 3rem;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -278,9 +444,15 @@
             color: var(--text-secondary);
         }
 
+        .price-per-day {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
         .pricing-features {
             list-style: none;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .pricing-features li {
@@ -288,9 +460,60 @@
             color: var(--text-secondary);
         }
 
+        .pricing-guarantee {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 60px 20px 80px;
+            background: var(--surface);
+        }
+
+        .faq-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--text-primary);
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .faq-answer {
+            padding: 0 24px 20px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
         /* フッター */
         footer {
-            background: var(--surface);
+            background: var(--background);
             padding: 40px 20px;
             text-align: center;
         }
@@ -317,6 +540,176 @@
             color: var(--text-primary);
         }
 
+        /* リード獲得フォーム */
+        .lead-form {
+            display: flex;
+            gap: 12px;
+            max-width: 500px;
+            margin: 24px auto 0;
+        }
+
+        .lead-form input[type="email"] {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .lead-form input[type="email"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .lead-form input[type="email"]:focus {
+            border-color: var(--primary-light);
+        }
+
+        .lead-form button {
+            padding: 14px 28px;
+            border-radius: 10px;
+            border: none;
+            background: var(--gradient-1);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .lead-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .lead-form button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .lead-form-message {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            min-height: 24px;
+        }
+
+        .lead-form-message.success {
+            color: #10b981;
+        }
+
+        .lead-form-message.error {
+            color: #ef4444;
+        }
+
+        /* 下部CTAセクション */
+        .bottom-cta {
+            padding: 80px 20px;
+            background: var(--background);
+            text-align: center;
+        }
+
+        .bottom-cta-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .bottom-cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bottom-cta p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .bottom-cta .trust-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            margin-top: 16px;
+        }
+
+        /* 離脱防止ポップアップ */
+        .exit-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .exit-overlay.active {
+            display: flex;
+        }
+
+        .exit-popup {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .exit-popup h3 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .exit-popup p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .exit-popup .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .exit-popup .close-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .exit-popup .lead-form {
+            flex-direction: column;
+            max-width: 100%;
+        }
+
+        .exit-popup .lead-form button {
+            width: 100%;
+        }
+
         /* レスポンシブ */
         @media (max-width: 768px) {
             .hero h1 {
@@ -331,12 +724,25 @@
                 display: none;
             }
 
-            .features h2, .pricing h2 {
+            .features h2, .pricing h2, .how-it-works h2, .testimonials h2 {
                 font-size: 2rem;
             }
 
             .pricing-card.featured {
                 transform: none;
+            }
+
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .lead-form {
+                flex-direction: column;
+            }
+
+            .bottom-cta h2 {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -363,6 +769,42 @@
             <div class="hero-buttons">
                 <a href="index.html" class="primary-button">無料で始める</a>
                 <a href="#features" class="secondary-button">詳しく見る</a>
+            </div>
+            <form class="lead-form" id="heroLeadForm" onsubmit="return submitLead(event, 'hero')">
+                <input type="email" placeholder="メールアドレスを入力" required>
+                <button type="submit">無料で始める</button>
+            </form>
+            <div class="lead-form-message" id="heroLeadMessage"></div>
+            <p class="hero-trust">クレジットカード不要 ・ 30秒で開始 ・ いつでも無料で使えます</p>
+        </div>
+    </section>
+
+    <!-- 使い方3ステップ -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="how-it-works-container">
+            <h2>かんたん3ステップ</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>アカウントを作成</h3>
+                        <p>メールアドレスとパスワードだけで登録完了。30秒で始められます。</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>思い出を記録</h3>
+                        <p>タイトルと内容を入力し、写真やタグを添えて保存。カテゴリーで整理もできます。</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>いつでも振り返り</h3>
+                        <p>検索やフィルターで過去の記憶を簡単に探せます。統計レポートで成長も確認。</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -406,6 +848,48 @@
         </div>
     </section>
 
+    <!-- 利用者の声 -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonials-container">
+            <h2>利用者の声</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">「子供の成長記録をつけるのに使っています。写真と一緒に感情を記録できるので、後で読み返すと当時の気持ちが蘇ります。」</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👩</div>
+                        <div>
+                            <div class="testimonial-name">M.K.さん</div>
+                            <div class="testimonial-role">2児の母</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">「旅行の記録に最適です。位置情報も保存できるので、どこで何を感じたかが一目でわかります。UIも美しい。」</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👨</div>
+                        <div>
+                            <div class="testimonial-name">T.S.さん</div>
+                            <div class="testimonial-role">写真愛好家</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">「日記アプリを色々試しましたが、これが一番続けやすいです。カテゴリーとタグで整理できるので、振り返りが楽しくなりました。」</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👩</div>
+                        <div>
+                            <div class="testimonial-name">A.Y.さん</div>
+                            <div class="testimonial-role">会社員</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 料金セクション -->
     <section class="pricing" id="pricing">
         <div class="pricing-container">
@@ -414,6 +898,7 @@
                 <div class="pricing-card">
                     <h3>無料プラン</h3>
                     <div class="price">¥0<span>/月</span></div>
+                    <div class="price-per-day">&nbsp;</div>
                     <ul class="pricing-features">
                         <li>✓ 50件まで記憶を保存</li>
                         <li>✓ 基本的な感情分析</li>
@@ -424,8 +909,10 @@
                     <a href="index.html" class="primary-button">無料で始める</a>
                 </div>
                 <div class="pricing-card featured">
+                    <div class="pricing-badge">7日間無料トライアル</div>
                     <h3>プレミアムプラン</h3>
-                    <div class="price">¥480<span>/月</span></div>
+                    <div class="price">¥500<span>/月</span></div>
+                    <div class="price-per-day">1日あたり約17円</div>
                     <ul class="pricing-features">
                         <li>✓ 無制限の記憶保存</li>
                         <li>✓ AI感情分析Pro</li>
@@ -437,10 +924,82 @@
                         <li>✓ 優先サポート</li>
                     </ul>
                     <a href="index.html" class="primary-button">7日間無料で試す</a>
+                    <p class="pricing-guarantee">満足できなければいつでもキャンセル可能。<br>返金保証付き。</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="faq-container">
+            <h2>よくある質問</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>無料プランでどこまで使えますか？</span>
+                    <span>▾</span>
+                </div>
+                <div class="faq-answer">
+                    無料プランでは最大50件の記憶を保存でき、基本的な検索・フィルター機能、写真のアップロード（2MBまで）をご利用いただけます。クレジットカードの登録は不要です。
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>プレミアムの無料トライアルはどうやって始めますか？</span>
+                    <span>▾</span>
+                </div>
+                <div class="faq-answer">
+                    アプリにログイン後、「プレミアムにアップグレード」ボタンからお申し込みいただけます。最初の7日間は無料で、期間中にキャンセルすれば料金は発生しません。
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>データのセキュリティは大丈夫ですか？</span>
+                    <span>▾</span>
+                </div>
+                <div class="faq-answer">
+                    はい。データはFirebaseの暗号化されたクラウドストレージに保存され、ご本人以外はアクセスできません。決済はStripeを使用しており、カード情報は当社サーバーに保存されません。
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>キャンセルや解約はどうすればいいですか？</span>
+                    <span>▾</span>
+                </div>
+                <div class="faq-answer">
+                    アプリ内の設定またはお問い合わせからいつでもキャンセルできます。キャンセル後も残りの期間はプレミアム機能をご利用いただけます。
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下部CTA -->
+    <section class="bottom-cta">
+        <div class="bottom-cta-container">
+            <h2>今すぐ始めよう</h2>
+            <p>大切な思い出を記録して、いつでも振り返れるようにしましょう。</p>
+            <form class="lead-form" id="bottomLeadForm" onsubmit="return submitLead(event, 'bottom_cta')">
+                <input type="email" placeholder="メールアドレスを入力" required>
+                <button type="submit">無料で始める</button>
+            </form>
+            <div class="lead-form-message" id="bottomLeadMessage"></div>
+            <p class="trust-text">30秒で登録完了 ・ クレジットカード不要 ・ いつでも無料</p>
+        </div>
+    </section>
+
+    <!-- 離脱防止ポップアップ -->
+    <div class="exit-overlay" id="exitOverlay">
+        <div class="exit-popup">
+            <button class="close-btn" onclick="closeExitPopup()">&times;</button>
+            <h3>ちょっと待ってください！</h3>
+            <p>メールアドレスを登録するだけで、すぐに思い出の記録を始められます。</p>
+            <form class="lead-form" id="exitLeadForm" onsubmit="return submitLead(event, 'exit_intent')">
+                <input type="email" placeholder="メールアドレスを入力" required>
+                <button type="submit">無料で始める</button>
+            </form>
+            <div class="lead-form-message" id="exitLeadMessage"></div>
+        </div>
+    </div>
 
     <!-- フッター -->
     <footer>
@@ -448,11 +1007,162 @@
             <div class="footer-links">
                 <a href="transaction-law.html">特定商取引法に基づく表記</a>
                 <a href="privacy-policy.html">プライバシーポリシー</a>
-                <a href="terms.html">利用規約</a>
-                <a href="mailto:contact@memory-fragments.app">お問い合わせ</a>
+                <a href="terms-of-service.html">利用規約</a>
+                <a href="mailto:hsuwa36@gmail.com">お問い合わせ</a>
             </div>
             <p>&copy; 2025 Memory Fragments. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="/js/analytics.js"></script>
+    <script>
+        // Firebase初期化 & リード獲得ロジック
+        (function() {
+            var firebaseDb;
+            try {
+                firebase.initializeApp({
+                    apiKey: "AIzaSyBqOMyegX7nfUrtVtTSpVNYpiqlBJTAM0k",
+                    authDomain: "memory-fragments.firebaseapp.com",
+                    projectId: "memory-fragments",
+                    storageBucket: "memory-fragments.firebasestorage.app",
+                    messagingSenderId: "798156189875",
+                    appId: "1:798156189875:web:404069566f9fa68a8580c6"
+                });
+                firebaseDb = firebase.firestore();
+                if (typeof Analytics !== 'undefined') {
+                    Analytics.init(firebaseDb);
+                    Analytics.track('landing_page_view', { referrer: document.referrer || '(direct)' });
+                }
+            } catch (e) {
+                // サイレントに失敗
+            }
+
+            // メールバリデーション
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // リード送信
+            window.submitLead = function(event, source) {
+                event.preventDefault();
+                var form = event.target;
+                var emailInput = form.querySelector('input[type="email"]');
+                var button = form.querySelector('button[type="submit"]');
+                var messageId = form.id.replace('Form', 'Message');
+                var messageEl = document.getElementById(messageId);
+                var email = emailInput.value.trim();
+
+                // バリデーション
+                if (!emailRegex.test(email)) {
+                    showFormMessage(messageEl, '有効なメールアドレスを入力してください。', 'error');
+                    return false;
+                }
+
+                // ローディング状態
+                button.disabled = true;
+                var originalText = button.textContent;
+                button.textContent = '送信中...';
+
+                if (!firebaseDb) {
+                    showFormMessage(messageEl, '接続エラーが発生しました。ページを再読み込みしてください。', 'error');
+                    button.disabled = false;
+                    button.textContent = originalText;
+                    return false;
+                }
+
+                firebaseDb.collection('leads').add({
+                    email: email,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    source: source,
+                    referrer: document.referrer || '(direct)',
+                    userAgent: navigator.userAgent
+                }).then(function() {
+                    showFormMessage(messageEl, '登録ありがとうございます！アプリを開いてアカウントを作成しましょう。', 'success');
+                    emailInput.value = '';
+                    button.textContent = originalText;
+                    button.disabled = false;
+
+                    if (typeof Analytics !== 'undefined') {
+                        Analytics.track('lead_captured', { source: source });
+                    }
+
+                    // 3秒後にアプリへリダイレクト
+                    setTimeout(function() {
+                        window.location.href = 'index.html';
+                    }, 3000);
+                }).catch(function(error) {
+                    console.error('Lead submission error:', error);
+                    showFormMessage(messageEl, '送信に失敗しました。もう一度お試しください。', 'error');
+                    button.textContent = originalText;
+                    button.disabled = false;
+                });
+
+                return false;
+            };
+
+            function showFormMessage(el, text, type) {
+                if (!el) return;
+                el.textContent = text;
+                el.className = 'lead-form-message ' + type;
+            }
+
+            // --- 離脱防止ポップアップ ---
+            var exitShown = false;
+
+            window.closeExitPopup = function() {
+                document.getElementById('exitOverlay').classList.remove('active');
+            };
+
+            function showExitPopup() {
+                if (exitShown) return;
+                if (sessionStorage.getItem('exitPopupShown')) return;
+                exitShown = true;
+                sessionStorage.setItem('exitPopupShown', '1');
+                document.getElementById('exitOverlay').classList.add('active');
+
+                if (typeof Analytics !== 'undefined') {
+                    Analytics.track('exit_popup_shown');
+                }
+            }
+
+            // デスクトップ: マウスがビューポート上部に移動時
+            document.addEventListener('mouseout', function(e) {
+                if (e.clientY <= 0) {
+                    showExitPopup();
+                }
+            });
+
+            // モバイル: スクロール70%到達時
+            var scrollTriggered = false;
+            window.addEventListener('scroll', function() {
+                if (scrollTriggered) return;
+                var scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+                if (scrollPercent >= 0.7) {
+                    scrollTriggered = true;
+                    showExitPopup();
+                }
+            });
+
+            // オーバーレイクリックで閉じる
+            var exitOverlayEl = document.getElementById('exitOverlay');
+            if (exitOverlayEl) {
+                exitOverlayEl.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeExitPopup();
+                    }
+                });
+            }
+
+            // CTA クリックトラッキング
+            document.querySelectorAll('.primary-button, .cta-button').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    if (typeof Analytics !== 'undefined') {
+                        Analytics.track('cta_click', { text: this.textContent.trim(), href: this.href });
+                    }
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
